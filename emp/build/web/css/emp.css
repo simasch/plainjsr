@@ -1,0 +1,25 @@
+table.result {
+	width: 600px;
+	border-collapse: collapse;
+}
+
+tr.result_even {
+	background-color: #DEDEDE;
+}
+
+td.result {
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+}
+
+th.result {
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}

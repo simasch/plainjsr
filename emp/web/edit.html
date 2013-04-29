@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>JHR Edit</title>
+        <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/util.js"></script>
+        <script>
+            var employee;
+
+            function getEmployee() {
+                var id = getParams().id;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/emp/res/employees/' + id, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        employee = JSON.parse(xhr.response);
+                        fillForm();
+                    }
+                };
+                xhr.send(null);
+            }
+
+            function fillForm() {
+                document.getElementById('emp_id').value = employee.id;
+                document.getElementById('emp_firstName').value = employee.firstName;
+                document.getElementById('emp_lastName').value = employee.lastName;
+            }
+
+            function save() {
+                fillEmployee();
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/emp/res/employees/");
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(employee));
+
+                window.location = "/emp/index.html";
+            }
+
+            function fillEmployee() {
+                employee.firstName = document.getElementById('emp_firstName').value;
+                employee.lastName = document.getElementById('emp_lastName').value;
+            }
+        </script>
+    </head>
+    <body onload="getEmployee();">
+
+        <h1>Employee Editor</h1>
+
+        <table>
+            <tr>
+                <td>Id</td>
+                <td><input type="text" id="emp_id" disabled="true" /></td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td><input type="text" id="emp_firstName" /></td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td><input type="text" id="emp_lastName" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button onclick="save();">Save</button>&nbsp;
+                    <a href="javascript:history.back();">Back</a></td>
+            </tr>
+        </table>
+
+    </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>JHR Style</title>
+        <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script>
+            var sort = 1;
+            var employees;
+
+            function listEmployees() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/emp/res/employees', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        employees = JSON.parse(xhr.response);
+                        createTableBody(employees);
+                    }
+                };
+                xhr.send(null);
+            }
+
+            function addEmployee() {
+                var employee = new Object();
+                employee.firstName = "Peter";
+                employee.lastName = "Muster";
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/emp/res/employees");
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(employee));
+
+                listEmployees();
+            }
+
+            function createTableBody(emps) {
+                tbody.innerHTML = '';
+
+                for (var i in emps) {
+                    var employee = emps[i];
+                    var row = tbody.insertRow(i);
+                    if (i % 2 === 0) {
+                        row.className = 'result_even';
+                    } else {
+                        row.className = 'result_odd';
+                    }
+
+                    var cellFirstName = row.insertCell(0);
+                    cellFirstName.className = 'result';
+                    cellFirstName.innerHTML = employee.firstName;
+
+                    var cellLastName = row.insertCell(1);
+                    cellLastName.className = 'result';
+                    cellLastName.innerHTML = employee.lastName;
+
+                    var edit = document.createElement('a');
+                    edit.setAttribute('href', 'edit.html?id=' + employee.id);
+                    var linkText = document.createTextNode("Edit");
+                    edit.appendChild(linkText);
+
+                    var cellFunction = row.insertCell(2);
+                    cellFunction.className = 'result';
+                    cellFunction.appendChild(edit);
+                }
+            }
+
+            function sortBy(property) {
+                employees.sort(createComparator(property));
+                if (sort % 2 === 0) {
+                    employees.reverse();
+                }
+                sort++;
+                createTableBody(employees);
+            }
+
+            function createComparator(property) {
+                return function(a, b) {
+                    if (a[property] < b[property]) {
+                        return -1;
+                    } else if (a[property] > b[property]) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                };
+            }
+
+            function filter(property) {
+                var filteredEmployees = new Array();
+                var searchString = document.getElementById(property).value;
+                if (searchString !== '') {
+                    var j = 0;
+                    for (i in employees) {
+                        var employee = employees[i];
+                        if (employee[property].indexOf(searchString) !== -1) {
+                            filteredEmployees[j] = employee;
+                            j++;
+                        }
+                    }
+                    createTableBody(filteredEmployees);
+                } else {
+                    createTableBody(employees);
+                }
+            }
+        </script>
+    </head>
+    <body onload="listEmployees();">
+
+        <h1>Employees</h1>
+
+        <table class="result">
+            <thead>
+                <tr>
+                    <th class="result" onclick="sortBy('firstName');">First<br />
+                        <input id="firstName" type="text" onkeyup="filter('firstName');" />
+                    </th>
+                    <th class="result" onclick="sortBy('lastName');">Last<br />
+                        <input id="lastName" type="text" onkeyup="filter('lastName');" />
+                    </th>
+                    <th class="result"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+
+        <p>
+            <input type="button" onclick="listEmployees();" value="List" />
+            &nbsp;
+            <input type="button" onclick="addEmployee();" value="Add" />
+        </p>
+
+    </body>
+</html>
