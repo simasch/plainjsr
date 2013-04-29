@@ -1,4 +1,4 @@
-function getParams(sequence) {
+function getParams() {
 	var sequence = window.location.search;
 	map = new Object();
 	if (sequence.length > 1) {
@@ -25,4 +25,7 @@ function getParams(sequence) {
 		}
 	}
 	return map;
+}
+function el(name) {
+    return document.getElementById(name);
 }

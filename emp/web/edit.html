@@ -28,9 +28,9 @@
             }
 
             function fillForm() {
-                document.getElementById('emp_id').value = employee.id;
-                document.getElementById('emp_firstName').value = employee.firstName;
-                document.getElementById('emp_lastName').value = employee.lastName;
+                el('emp_id').value = employee.id;
+                el('emp_firstName').value = employee.firstName;
+                el('emp_lastName').value = employee.lastName;
             }
 
             function save() {
@@ -45,8 +45,8 @@
             }
 
             function fillEmployee() {
-                employee.firstName = document.getElementById('emp_firstName').value;
-                employee.lastName = document.getElementById('emp_lastName').value;
+                employee.firstName = el('emp_firstName').value;
+                employee.lastName = el('emp_lastName').value;
             }
         </script>
     </head>
@@ -72,12 +72,16 @@
                                 <td><input type="text" id="emp_lastName" /></td>
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                            </tr>
+                            <tr>
                                 <td></td>
                                 <td><button onclick="save();">Save</button>&nbsp;
                                     <a href="javascript:history.back();">Back</a></td>
                             </tr>
                         </table>
-                        
+
                     </td>
                 </tr>
             </table>
