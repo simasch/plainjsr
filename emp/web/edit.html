@@ -10,16 +10,21 @@
 
             function getEmployee() {
                 var id = getParams().id;
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', '/emp/res/employees/' + id, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        employee = JSON.parse(xhr.response);
-                        fillForm();
-                    }
-                };
-                xhr.send(null);
+                if (id == null) {
+                    employee = new Object();
+                    employee.firstName = '';
+                    employee.lastName = '';
+                } else {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '/emp/res/employees/' + id, true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            employee = JSON.parse(xhr.response);
+                            fillForm();
+                        }
+                    };
+                    xhr.send(null);
+                }
             }
 
             function fillForm() {
@@ -51,7 +56,7 @@
         <table>
             <tr>
                 <td>Id</td>
-                <td><input type="text" id="emp_id" disabled="true" /></td>
+                <td><input type="text" id="emp_id" disabled /></td>
             </tr>
             <tr>
                 <td>First name</td>
