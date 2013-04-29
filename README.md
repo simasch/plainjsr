@@ -1,4 +1,4 @@
-jhr
+JHR
 ===
 
 JavaScript HTML Rest
