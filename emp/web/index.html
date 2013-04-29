@@ -95,7 +95,7 @@
                     var j = 0;
                     for (i in employees) {
                         var employee = employees[i];
-                        if (employee[property].indexOf(searchString) !== -1) {
+                        if (employee[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
                             filteredEmployees[j] = employee;
                             j++;
                         }
@@ -132,7 +132,7 @@
                             <tbody id="tbody">
                             </tbody>
                         </table>
-                        <br/><br/>
+                        <br/>
                         <a href="edit.html">Add Employee</a>
 
                     </td>
