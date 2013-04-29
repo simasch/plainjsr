@@ -4,6 +4,7 @@
         <meta charset='utf-8'>
         <title>JHR Style</title>
         <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/navigation.js"></script>
         <script>
             var sort = 1;
             var employees;
@@ -107,11 +108,15 @@
             }
         </script>
     </head>
-    <body onload="listEmployees();">
+    <body onload="includeNavigation();listEmployees();">
         <div align="center">
             <table>
                 <tr>
                     <td>
+
+                        <div id="navigation">
+                            <script>includeNavigation();</script>
+                        </div>
 
                         <h1>Employees</h1>
 

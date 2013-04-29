@@ -5,6 +5,7 @@
         <title>JHR Edit</title>
         <link rel="stylesheet" type="text/css" href="css/emp.css">
         <script src="javascript/util.js"></script>
+        <script src="javascript/navigation.js"></script>
         <script>
             var employee;
 
@@ -43,7 +44,6 @@
 
                 for (var i in employee.phones) {
                     var phone = employee.phones[i];
-                    console.log(phone.id + ' ' + phone.number);
                     var row = tbody.insertRow(i);
                     if (i % 2 === 0) {
                         row.className = 'result_even';
@@ -145,6 +145,10 @@
                 <tr>
                     <td>
 
+                        <div id="navigation">
+                            <script>includeNavigation();</script>
+                        </div>
+
                         <h1>Employee Editor</h1>
 
                         <table style="width: 600px;">
@@ -177,7 +181,8 @@
                         <p>
                             <a href="#" onclick="addPhone();">Add Phone</a>
                             <br /><br /><br />
-                            <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a></p>
+                            <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
+                        </p>
                     </td>
                 </tr>
             </table>
