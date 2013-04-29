@@ -112,30 +112,36 @@
         </script>
     </head>
     <body onload="listEmployees();">
-
-        <h1>Employees</h1>
-
-        <table class="result">
-            <thead>
+        <div align="center">
+            <table>
                 <tr>
-                    <th class="result" onclick="sortBy('firstName');">First<br />
-                        <input id="firstName" type="text" onkeyup="filter('firstName');" />
-                    </th>
-                    <th class="result" onclick="sortBy('lastName');">Last<br />
-                        <input id="lastName" type="text" onkeyup="filter('lastName');" />
-                    </th>
-                    <th class="result"></th>
+                    <td>
+
+                        <h1>Employees</h1>
+
+                        <table class="result">
+                            <thead>
+                                <tr>
+                                    <th class="result" onclick="sortBy('firstName');">First<br />
+                                        <input id="firstName" type="text" onkeyup="filter('firstName');" />
+                                    </th>
+                                    <th class="result" onclick="sortBy('lastName');">Last<br />
+                                        <input id="lastName" type="text" onkeyup="filter('lastName');" />
+                                    </th>
+                                    <th class="result"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+
+                        <p>
+                            <a href="edit.html">Add Employee</a>
+                        </p>
+
+                    </td>
                 </tr>
-            </thead>
-            <tbody id="tbody">
-            </tbody>
-        </table>
-
-        <p>
-            <button onclick="listEmployees();">List</button>
-            &nbsp;
-            <a href="edit.html">Add</a>
-        </p>
-
+            </table>
+        </div>
     </body>
 </html>

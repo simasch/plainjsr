@@ -51,28 +51,36 @@
         </script>
     </head>
     <body onload="getEmployee();">
+        <div align="center">
+            <table>
+                <tr>
+                    <td>
 
-        <h1>Employee Editor</h1>
+                        <h1>Employee Editor</h1>
 
-        <table>
-            <tr>
-                <td>Id</td>
-                <td><input type="text" id="emp_id" disabled /></td>
-            </tr>
-            <tr>
-                <td>First name</td>
-                <td><input type="text" id="emp_firstName" /></td>
-            </tr>
-            <tr>
-                <td>Last name</td>
-                <td><input type="text" id="emp_lastName" /></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button onclick="save();">Save</button>&nbsp;
-                    <a href="javascript:history.back();">Back</a></td>
-            </tr>
-        </table>
-
+                        <table style="width: 600px;">
+                            <tr>
+                                <td>Id</td>
+                                <td><input type="text" id="emp_id" disabled /></td>
+                            </tr>
+                            <tr>
+                                <td>First name</td>
+                                <td><input type="text" id="emp_firstName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Last name</td>
+                                <td><input type="text" id="emp_lastName" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button onclick="save();">Save</button>&nbsp;
+                                    <a href="javascript:history.back();">Back</a></td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
