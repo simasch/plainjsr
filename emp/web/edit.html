@@ -18,10 +18,14 @@
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', '/emp/res/employees/' + id, true);
                     xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            employee = JSON.parse(xhr.response);
-                            fillForm();
-                            fillTable();
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                employee = JSON.parse(xhr.response);
+                                fillForm();
+                                fillTable();
+                            } else {
+                                alert(xhr.status);
+                            }
                         }
                     };
                     xhr.send(null);
@@ -39,6 +43,7 @@
 
                 for (var i in employee.phones) {
                     var phone = employee.phones[i];
+                    console.log(phone.id + ' ' + phone.number);
                     var row = tbody.insertRow(i);
                     if (i % 2 === 0) {
                         row.className = 'result_even';
@@ -57,7 +62,7 @@
 
                     var del = document.createElement('a');
                     del.setAttribute('href', '#');
-                    del.setAttribute('onclick', 'deletePhone(' + employee.id + ')');
+                    del.setAttribute('onclick', 'deletePhone(' + phone.id + ')');
                     var delText = document.createTextNode("Delete");
                     del.appendChild(delText);
 
@@ -72,17 +77,65 @@
             function save() {
                 fillEmployee();
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/emp/res/employees/");
+                xhr.open("POST", "/emp/res/employees/", true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 204) {
+                            alert("Employee saved");
+                            window.location = "/emp/index.html";
+                        } else {
+                            alert(xhr.status);
+                        }
+                    }
+                };
                 xhr.send(JSON.stringify(employee));
-
-                alert("Employee saved");
-                window.location = "/emp/index.html";
             }
 
             function fillEmployee() {
                 employee.firstName = el('emp_firstName').value;
                 employee.lastName = el('emp_lastName').value;
+            }
+
+            function addPhone() {
+                var row = tbody.insertRow(employee.phones.length);
+
+                var cellNumber = row.insertCell(0);
+                cellNumber.className = 'result';
+                cellNumber.innerHTML = '<input type="text" id="phone_number" />';
+
+                var save = document.createElement('a');
+                save.setAttribute('href', '#');
+                save.setAttribute('onclick', 'savePhone()');
+                var saveText = document.createTextNode("Save");
+                save.appendChild(saveText);
+
+                var cellFunction = row.insertCell(1);
+                cellFunction.className = 'result';
+                cellFunction.appendChild(save);
+            }
+
+            function savePhone() {
+                var phone = new Object();
+                phone.number = el('phone_number').value;
+                employee.phones[employee.phones.length] = phone;
+
+                fillTable();
+            }
+
+            function deletePhone(id) {
+                var j = 0;
+                var phones = [];
+                for (var i in employee.phones) {
+                    var phone = employee.phones[i];
+                    if (phone.id == id) {
+                    } else {
+                        phones[j] = phone;
+                        j++;
+                    }
+                }
+                employee.phones = phones;
+                fillTable();
             }
         </script>
     </head>
@@ -121,7 +174,9 @@
                             <tbody id="tbody">
                             </tbody>
                         </table>
-                        <br /><br />
+                        <br />
+                        <a href="#" onclick="addPhone();">Add Phone</a>
+                        <br /><br /><br />
                         <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
                     </td>
                 </tr>

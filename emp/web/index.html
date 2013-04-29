@@ -12,9 +12,13 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', '/emp/res/employees', true);
                 xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        employees = JSON.parse(xhr.response);
-                        createTableBody(employees);
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            employees = JSON.parse(xhr.response);
+                            createTableBody(employees);
+                        } else {
+                            alert(xhr.status);
+                        }
                     }
                 };
                 xhr.send(null);
@@ -24,9 +28,13 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('DELETE', '/emp/res/employees/' + id, true);
                 xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 204) {
-                        listEmployees();
-                        alert("Employee deleted");
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 204) {
+                            listEmployees();
+                            alert("Employee deleted");
+                        } else {
+                            alter(xhr.status);
+                        }
                     }
                 };
                 xhr.send(null);
