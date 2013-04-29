@@ -10,6 +10,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import jhr.control.EmpService;
 import jhr.entity.Employee;
 
@@ -32,14 +34,26 @@ public class EmpFacade {
 
     @GET
     @Path("{id}")
-    public Employee get(@PathParam("id") Long id) {
-        return service.getEmployee(id);
+    public Employee get(@PathParam("id") Long id) throws WebApplicationException{
+        Employee e = service.getEmployee(id);
+        if (e == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        else {
+            return e;
+        }
     }
 
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        service.deleteEmployee(id);
+        Employee e = service.getEmployee(id);
+        if (e == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        else {
+            service.deleteEmployee(e);
+        }
     }
 
     @POST

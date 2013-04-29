@@ -20,14 +20,13 @@ public class EmpService {
     public List<Employee> listEmployees() {
         TypedQuery q = em.createQuery("select e from Employee e", Employee.class);
         List<Employee> list = q.getResultList();
-        for (Employee e : list) {
-            e.getPhones();
-        }
         return list;
     }
 
     public Employee getEmployee(Long id) {
-        return em.find(Employee.class, id);
+        Employee e = em.find(Employee.class, id);
+        e.getPhones();
+        return e;
     }
 
     @TransactionAttribute(REQUIRED)
@@ -36,9 +35,8 @@ public class EmpService {
     }
 
     @TransactionAttribute(REQUIRED)
-    public void deleteEmployee(Long id) {
-        Employee e = em.find(Employee.class, id);
+    public void deleteEmployee(Employee e) {
+        e = em.merge(e);
         em.remove(e);
     }
-
 }

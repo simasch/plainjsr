@@ -80,18 +80,6 @@
                 createTableBody(employees);
             }
 
-            function createComparator(property) {
-                return function(a, b) {
-                    if (a[property] < b[property]) {
-                        return -1;
-                    } else if (a[property] > b[property]) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                };
-            }
-
             function filter(property) {
                 var filteredEmployees = new Array();
                 var searchString = document.getElementById(property).value;
