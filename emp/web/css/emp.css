@@ -31,8 +31,12 @@ button {
     cursor: pointer;
 }
 
-table.result {
+table.layout_table {
     width: 600px;
+}
+
+table.result {
+    width: 100%;
     border-collapse: collapse;
 }
 
