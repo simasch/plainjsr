@@ -67,25 +67,13 @@
             }
 
             function save() {
-                if (validateInput()) {
-                    fillEmployee();
-                    sendRequest('POST', '/emp/res/employees/', 204, function() {
-                        info("Employee saved");
-                    }, 'application/json', JSON.stringify(employee));
-                }
+                fillEmployee();
+                sendRequest('POST', '/emp/res/employees/', 204, function() {
+                    info("Employee saved");
+                }, 'application/json', JSON.stringify(employee));
             }
 
             function validateInput() {
-                if (el('emp_firstName').value === '') {
-                    error('First name is empty!');
-                    el('emp_firstName').focus();
-                    return false;
-                }
-                if (el('emp_lastName').value === '') {
-                    error('Last name is empty!');
-                    el('emp_lastName').focus();
-                    return false;
-                }
                 if (el('phone_number') != null && el('phone_number').value === '') {
                     error('Phone number is empty!');
                     el('phone_number').focus();
@@ -157,12 +145,14 @@
             }
 
             function savePhone() {
-                var phone = new Object();
-                phone.number = el('phone_number').value;
-                initializePhones();
-                employee.phones[getIndex()] = phone;
+                if (validateInput()) {
+                    var phone = new Object();
+                    phone.number = el('phone_number').value;
+                    initializePhones();
+                    employee.phones[getIndex()] = phone;
 
-                fillTable();
+                    fillTable();
+                }
             }
 
             function initializePhones() {
@@ -209,38 +199,43 @@
 
             <h1>Employee Editor</h1>
 
-            <table style="width: 100%">
-                <tr>
-                    <td>Id</td>
-                    <td><input type="text" id="emp_id" readonly disabled /></td>
-                </tr>
-                <tr>
-                    <td>First name</td>
-                    <td><input type="text" id="emp_firstName" required /></td>
-                </tr>
-                <tr>
-                    <td>Last name</td>
-                    <td><input type="text" id="emp_lastName" required /></td>
-                </tr>
-            </table>
+            <form action="javascript:save();">
 
-            <h2>Phones</h2>
-
-            <table class="result">
-                <thead>
+                <table style="width: 100%">
                     <tr>
-                        <th class="result">Number</th>
-                        <th class="result" style="width: 100px"></th>
+                        <td>Id</td>
+                        <td><input type="text" id="emp_id" readonly disabled /></td>
                     </tr>
-                </thead>
-                <tbody id="tbody">
-                </tbody>
-            </table>
-            <p>
-                <a href="#" onclick="addPhone();">Add Phone</a>
-                <br /><br /><br />
-                <button onclick="save();">Save</button>&nbsp;<a href="index.html">Back</a>
-            </p>
+                    <tr>
+                        <td>First name</td>
+                        <td><input type="text" id="emp_firstName" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td><input type="text" id="emp_lastName" required /></td>
+                    </tr>
+                </table>
+
+                <h2>Phones</h2>
+
+                <table class="result">
+                    <thead>
+                        <tr>
+                            <th class="result">Number</th>
+                            <th class="result" style="width: 100px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+                <p>
+                    <a href="#" onclick="addPhone();">Add Phone</a>
+                    <br /><br /><br />
+                    <input type="submit" value="Save" />&nbsp;<a href="index.html">Back</a>
+                </p>
+
+            </form>
+
         </div>
     </body>
 </html>
