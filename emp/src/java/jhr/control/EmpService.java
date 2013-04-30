@@ -8,6 +8,8 @@ import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import jhr.entity.Employee;
 
 @Stateless
@@ -18,7 +20,9 @@ public class EmpService {
     private EntityManager em;
 
     public List<Employee> listEmployees() {
-        TypedQuery q = em.createQuery("select e from Employee e", Employee.class);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
+        TypedQuery q = em.createQuery(cq);
         List<Employee> list = q.getResultList();
         return list;
     }
