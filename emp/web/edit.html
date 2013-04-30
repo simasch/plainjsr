@@ -16,20 +16,11 @@
                     employee.firstName = '';
                     employee.lastName = '';
                 } else {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', '/emp/res/employees/' + id, true);
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                                employee = JSON.parse(xhr.response);
-                                fillForm();
-                                fillTable();
-                            } else {
-                                alert(xhr.status);
-                            }
-                        }
-                    };
-                    xhr.send(null);
+                    sendRequest('GET', '/emp/res/employees/' + id, 200, function(response) {
+                        employee = JSON.parse(response);
+                        fillForm();
+                        fillTable();
+                    });
                 }
             }
 
@@ -76,20 +67,10 @@
 
             function save() {
                 fillEmployee();
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/emp/res/employees/", true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 204) {
-                            alert("Employee saved");
-                            window.location = "/emp/index.html";
-                        } else {
-                            alert(xhr.status);
-                        }
-                    }
-                };
-                xhr.send(JSON.stringify(employee));
+                sendRequest("POST", "/emp/res/employees/", 204, function() {
+                    alert("Employee saved");
+                    window.location = "/emp/index.html";
+                }, 'application/json', JSON.stringify(employee));
             }
 
             function fillEmployee() {

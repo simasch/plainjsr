@@ -1,3 +1,21 @@
+function sendRequest(method, url, status, func, contenttype, body) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === status) {
+                func(xhr.response);
+            } else {
+                alert(xhr.status);
+            }
+        }
+    };
+    if (contenttype != null) {
+        xhr.setRequestHeader('Content-Type', contenttype);
+    }
+    xhr.send(body);
+}
+
 function getParams() {
     var sequence = window.location.search;
     map = new Object();
