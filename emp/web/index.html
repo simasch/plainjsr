@@ -38,9 +38,13 @@
 
                     var cellFirstName = row.insertCell(0);
                     cellFirstName.className = 'result';
+                    cellFirstName.innerHTML = employee.id;
+
+                    var cellFirstName = row.insertCell(1);
+                    cellFirstName.className = 'result';
                     cellFirstName.innerHTML = employee.firstName;
 
-                    var cellLastName = row.insertCell(1);
+                    var cellLastName = row.insertCell(2);
                     cellLastName.className = 'result';
                     cellLastName.innerHTML = employee.lastName;
 
@@ -55,7 +59,7 @@
                     var delText = document.createTextNode('Delete');
                     del.appendChild(delText);
 
-                    var cellFunction = row.insertCell(2);
+                    var cellFunction = row.insertCell(3);
                     cellFunction.className = 'result';
                     cellFunction.appendChild(edit);
                     cellFunction.appendChild(document.createTextNode(" "));
@@ -102,7 +106,10 @@
             <table class="result">
                 <thead>
                     <tr>
-                        <th class="result" onclick="sortBy('firstName');" style="width:250px;">
+                        <th class="result" onclick="sortBy('id');" style="width:50px;">
+                            ID
+                        </th>
+                        <th class="result" onclick="sortBy('firstName');" style="width:200px;">
                             First name<br />
                             <input id="firstName" type="text" onkeyup="filter('firstName');" />
                         </th>
