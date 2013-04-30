@@ -20,7 +20,7 @@ h3 {
     font-weight: bold;
 }
 
-button {
+form input[type="submit"], button {
     border: 1px solid #a8a8a8;
     background: #F5F5F5;
     color: #4f4f4f;
