@@ -1,5 +1,6 @@
 package jhr.control;
 
+import jhr.boundry.EmployeeDTO;
 import static javax.ejb.TransactionAttributeType.*;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,11 +20,11 @@ public class EmpService {
     @PersistenceContext
     private EntityManager em;
 
-    public List<Employee> listEmployees() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
-        TypedQuery q = em.createQuery(cq);
-        List<Employee> list = q.getResultList();
+    public List<EmployeeDTO> listEmployees() {
+        TypedQuery<EmployeeDTO> q = em.createQuery("select new jhr.boundry.EmployeeDTO"
+                + "(e.id, e.firstName, e.lastName) from Employee e order by e.id",
+                EmployeeDTO.class);
+        List<EmployeeDTO> list = q.getResultList();
         return list;
     }
 

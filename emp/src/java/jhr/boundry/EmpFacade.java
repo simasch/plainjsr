@@ -28,7 +28,7 @@ public class EmpFacade {
     }
 
     @GET
-    public List<Employee> list() {
+    public List<EmployeeDTO> list() {
         return service.listEmployees();
     }
 
