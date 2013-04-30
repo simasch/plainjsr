@@ -37,7 +37,7 @@ div#main {
     width: 600px
 }
 
-div.info {
+div#info {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -55,7 +55,7 @@ div.info {
     border-color: dodgerblue;
 }
 
-div.error {
+div#error {
     position: absolute;
     right: 10px;
     top: 10px;

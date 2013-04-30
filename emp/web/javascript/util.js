@@ -64,20 +64,16 @@ function createComparator(property) {
 function info(message) {
     var div = document.createElement('div');
     div.setAttribute('id', 'info');
-    div.setAttribute('class', 'info');
-    div.innerHTML = 'INFO<br />' + message;
+    div.innerHTML = '<b>INFO</b><br />' + message;
     document.body.appendChild(div);
-
     window.setTimeout("fade(el('info'))", 5000);
 }
 
 function error(message) {
     var div = document.createElement('div');
     div.setAttribute('id', 'error');
-    div.setAttribute('class', 'error');
-    div.innerHTML = 'ERROR<br />' + message;
+    div.innerHTML = '<b>ERROR</b><br />' + message;
     document.body.appendChild(div);
-
     window.setTimeout("fade(el('error'))", 5000);
 }
 
