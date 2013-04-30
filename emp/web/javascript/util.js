@@ -12,6 +12,7 @@ function sendRequest(method, url, status, func, contenttype, body) {
     };
     if (contenttype != null) {
         xhr.setRequestHeader('Content-Type', contenttype);
+        console.log(body);
     }
     xhr.send(body);
 }

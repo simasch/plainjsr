@@ -49,6 +49,7 @@
                     var edit = document.createElement('a');
                     edit.setAttribute('href', '#');
                     var editText = document.createTextNode("Edit");
+                    edit.setAttribute('onclick', 'editPhone(' + i + ')');
                     edit.appendChild(editText);
 
                     var del = document.createElement('a');
@@ -96,10 +97,37 @@
                 cellFunction.appendChild(save);
             }
 
+            function editPhone(index) {
+                tbody.deleteRow(index);
+                var row = tbody.insertRow(index);
+
+                var cellNumber = row.insertCell(0);
+                cellNumber.className = 'result';
+                cellNumber.innerHTML = '<input type="text" id="phone_number" />';
+                el('phone_number').value = employee.phones[index].number;
+
+                var save = document.createElement('a');
+                save.setAttribute('href', '#');
+                save.setAttribute('onclick', 'updatePhone(' + index + ')');
+                var saveText = document.createTextNode("Save");
+                save.appendChild(saveText);
+
+                var cellFunction = row.insertCell(1);
+                cellFunction.className = 'result';
+                cellFunction.appendChild(save);
+            }
+
             function savePhone() {
                 var phone = new Object();
                 phone.number = el('phone_number').value;
                 employee.phones[employee.phones.length] = phone;
+
+                fillTable();
+            }
+
+            function updatePhone(index) {
+                var phone = employee.phones[index];
+                phone.number = el('phone_number').value;
 
                 fillTable();
             }

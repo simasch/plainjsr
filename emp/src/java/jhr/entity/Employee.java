@@ -2,6 +2,7 @@ package jhr.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ public class Employee {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany
+    @OneToMany(cascade = ALL, orphanRemoval = true)
     @JoinColumn(name = "employee_id")
     private Set<Phone> phones = new HashSet<Phone>();
 
