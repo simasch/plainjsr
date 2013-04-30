@@ -4,9 +4,10 @@
         <meta charset='utf-8'>
         <title>JHR Style</title>
         <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/util.js"></script>
         <script src="javascript/navigation.js"></script>
         <script>
-            var sort = 1;
+            var ascending = true;
             var employees;
 
             function listEmployees() {
@@ -82,10 +83,10 @@
 
             function sortBy(property) {
                 employees.sort(createComparator(property));
-                if (sort % 2 === 0) {
+                if (ascending) {
                     employees.reverse();
                 }
-                sort++;
+                ascending = !ascending;
                 createTableBody(employees);
             }
 
@@ -109,40 +110,32 @@
         </script>
     </head>
     <body onload="listEmployees();">
-        <div align="center">
-            <table class="layout_table">
-                <tr>
-                    <td>
+        <div class="main">
+            <div id="navigation">
+                <script>includeNavigation();</script>
+            </div>
 
-                        <div id="navigation">
-                            <script>includeNavigation();</script>
-                        </div>
+            <h1>Employees</h1>
 
-                        <h1>Employees</h1>
-
-                        <table class="result">
-                            <thead>
-                                <tr>
-                                    <th class="result" onclick="sortBy('firstName');" style="width:250px;">
-                                        First name<br />
-                                        <input id="firstName" type="text" onkeyup="filter('firstName');" />
-                                    </th>
-                                    <th class="result" onclick="sortBy('lastName');" style="width:250px;">
-                                        Last name<br />
-                                        <input id="lastName" type="text" onkeyup="filter('lastName');" />
-                                    </th>
-                                    <th class="result"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                            </tbody>
-                        </table>
-                        <br/>
-                        <a href="edit.html">Add Employee</a>
-
-                    </td>
-                </tr>
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result" onclick="sortBy('firstName');" style="width:250px;">
+                            First name<br />
+                            <input id="firstName" type="text" onkeyup="filter('firstName');" />
+                        </th>
+                        <th class="result" onclick="sortBy('lastName');">
+                            Last name<br />
+                            <input id="lastName" type="text" onkeyup="filter('lastName');"/>
+                        </th>
+                        <th class="result" style="width:100px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
             </table>
+            <br/>
+            <a href="edit.html">Add Employee</a>
         </div>
     </body>
 </html>

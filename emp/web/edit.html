@@ -140,52 +140,45 @@
         </script>
     </head>
     <body onload="getEmployee();">
-        <div align="center">
-            <table class="layout_table">
+        <div class="main">
+            <div id="navigation">
+                <script>includeNavigation();</script>
+            </div>
+
+            <h1>Employee Editor</h1>
+
+            <table style="width: 100%">
                 <tr>
-                    <td>
-
-                        <div id="navigation">
-                            <script>includeNavigation();</script>
-                        </div>
-
-                        <h1>Employee Editor</h1>
-
-                        <table style="width: 100%">
-                            <tr>
-                                <td>Id</td>
-                                <td><input type="text" id="emp_id" disabled /></td>
-                            </tr>
-                            <tr>
-                                <td>First name</td>
-                                <td><input type="text" id="emp_firstName" /></td>
-                            </tr>
-                            <tr>
-                                <td>Last name</td>
-                                <td><input type="text" id="emp_lastName" /></td>
-                            </tr>
-                        </table>
-
-                        <h2>Phones</h2>
-
-                        <table class="result">
-                            <thead>
-                                <tr>
-                                    <th class="result">Number</th>
-                                    <th class="result" style="width: 100px"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                            </tbody>
-                        </table>
-                        <p>
-                            <a href="#" onclick="addPhone();">Add Phone</a>
-                            <br /><br /><br />
-                            <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
-                        </p>
-                    </td>
+                    <td>Id</td>
+                    <td><input type="text" id="emp_id" disabled /></td>
+                </tr>
+                <tr>
+                    <td>First name</td>
+                    <td><input type="text" id="emp_firstName" /></td>
+                </tr>
+                <tr>
+                    <td>Last name</td>
+                    <td><input type="text" id="emp_lastName" /></td>
                 </tr>
             </table>
+
+            <h2>Phones</h2>
+
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result">Number</th>
+                        <th class="result" style="width: 100px"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+            <p>
+                <a href="#" onclick="addPhone();">Add Phone</a>
+                <br /><br /><br />
+                <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
+            </p>
         </div>
     </body>
 </html>
