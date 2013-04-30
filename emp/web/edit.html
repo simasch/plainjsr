@@ -10,11 +10,10 @@
             var employee;
 
             function getEmployee() {
-                var id = getParams().id;
+                var id = param().id;
                 if (id == null) {
                     employee = new Object();
-                    employee.firstName = '';
-                    employee.lastName = '';
+                    el('emp_firstName').focus();
                 } else {
                     sendRequest('GET', '/emp/res/employees/' + id, 200, function(response) {
                         employee = JSON.parse(response);
@@ -28,6 +27,7 @@
                 el('emp_id').value = employee.id;
                 el('emp_firstName').value = employee.firstName;
                 el('emp_lastName').value = employee.lastName;
+                el('emp_firstName').focus();
             }
 
             function fillTable() {
@@ -48,14 +48,14 @@
 
                     var edit = document.createElement('a');
                     edit.setAttribute('href', '#');
-                    var editText = document.createTextNode("Edit");
                     edit.setAttribute('onclick', 'editPhone(' + i + ')');
+                    var editText = document.createTextNode('Edit');
                     edit.appendChild(editText);
 
                     var del = document.createElement('a');
                     del.setAttribute('href', '#');
                     del.setAttribute('onclick', 'deletePhone(' + phone.id + ')');
-                    var delText = document.createTextNode("Delete");
+                    var delText = document.createTextNode('Delete');
                     del.appendChild(delText);
 
                     var cellFunction = row.insertCell(1);
@@ -67,11 +67,31 @@
             }
 
             function save() {
-                fillEmployee();
-                sendRequest("POST", "/emp/res/employees/", 204, function() {
-                    alert("Employee saved");
-                    window.location = "/emp/index.html";
-                }, 'application/json', JSON.stringify(employee));
+                if (validateInput()) {
+                    fillEmployee();
+                    sendRequest('POST', '/emp/res/employees/', 204, function() {
+                        info("Employee saved");
+                    }, 'application/json', JSON.stringify(employee));
+                }
+            }
+
+            function validateInput() {
+                if (el('emp_firstName').value === '') {
+                    error('First name is empty!');
+                    el('emp_firstName').focus();
+                    return false;
+                }
+                if (el('emp_lastName').value === '') {
+                    error('Last name is empty!');
+                    el('emp_lastName').focus();
+                    return false;
+                }
+                if (el('phone_number') != null && el('phone_number').value === '') {
+                    error('Phone number is empty!');
+                    el('phone_number').focus();
+                    return false;
+                }
+                return true;
             }
 
             function fillEmployee() {
@@ -79,22 +99,41 @@
                 employee.lastName = el('emp_lastName').value;
             }
 
+            function keyOnPhone(index) {
+                if (event.keyCode === 13) {
+                    initializePhones();
+                    var phone = employee.phones[index];
+                    if (phone == null) {
+                        savePhone();
+                    } else {
+                        updatePhone();
+                    }
+                }
+            }
+
             function addPhone() {
-                var row = tbody.insertRow(employee.phones.length);
+                var row = tbody.insertRow(getIndex());
+
+                var input = document.createElement('input');
+                input.setAttribute('type', 'text');
+                input.setAttribute('id', 'phone_number');
+                input.setAttribute('onkeyDown', 'keyOnPhone(' + getIndex() + ')');
 
                 var cellNumber = row.insertCell(0);
                 cellNumber.className = 'result';
-                cellNumber.innerHTML = '<input type="text" id="phone_number" />';
+                cellNumber.appendChild(input);
 
                 var save = document.createElement('a');
                 save.setAttribute('href', '#');
                 save.setAttribute('onclick', 'savePhone()');
-                var saveText = document.createTextNode("Save");
+                var saveText = document.createTextNode('Save');
                 save.appendChild(saveText);
 
                 var cellFunction = row.insertCell(1);
                 cellFunction.className = 'result';
                 cellFunction.appendChild(save);
+
+                el('phone_number').focus();
             }
 
             function editPhone(index) {
@@ -109,7 +148,7 @@
                 var save = document.createElement('a');
                 save.setAttribute('href', '#');
                 save.setAttribute('onclick', 'updatePhone(' + index + ')');
-                var saveText = document.createTextNode("Save");
+                var saveText = document.createTextNode('Save');
                 save.appendChild(saveText);
 
                 var cellFunction = row.insertCell(1);
@@ -120,9 +159,16 @@
             function savePhone() {
                 var phone = new Object();
                 phone.number = el('phone_number').value;
-                employee.phones[employee.phones.length] = phone;
+                initializePhones();
+                employee.phones[getIndex()] = phone;
 
                 fillTable();
+            }
+
+            function initializePhones() {
+                if (employee.phones == null) {
+                    employee.phones = [];
+                }
             }
 
             function updatePhone(index) {
@@ -137,8 +183,7 @@
                 var phones = [];
                 for (var i in employee.phones) {
                     var phone = employee.phones[i];
-                    if (phone.id == id) {
-                    } else {
+                    if (phone.id != id) {
                         phones[j] = phone;
                         j++;
                     }
@@ -146,10 +191,18 @@
                 employee.phones = phones;
                 fillTable();
             }
+
+            function getIndex() {
+                var index = 0;
+                if (employee.phones != null && employee.phones.length != null) {
+                    index = employee.phones.length;
+                }
+                return index;
+            }
         </script>
     </head>
     <body onload="getEmployee();">
-        <div class="main">
+        <div id="main">
             <div id="navigation">
                 <script>includeNavigation();</script>
             </div>
@@ -159,15 +212,15 @@
             <table style="width: 100%">
                 <tr>
                     <td>Id</td>
-                    <td><input type="text" id="emp_id" disabled /></td>
+                    <td><input type="text" id="emp_id" readonly disabled /></td>
                 </tr>
                 <tr>
                     <td>First name</td>
-                    <td><input type="text" id="emp_firstName" /></td>
+                    <td><input type="text" id="emp_firstName" required /></td>
                 </tr>
                 <tr>
                     <td>Last name</td>
-                    <td><input type="text" id="emp_lastName" /></td>
+                    <td><input type="text" id="emp_lastName" required /></td>
                 </tr>
             </table>
 
@@ -186,7 +239,7 @@
             <p>
                 <a href="#" onclick="addPhone();">Add Phone</a>
                 <br /><br /><br />
-                <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
+                <button onclick="save();">Save</button>&nbsp;<a href="index.html">Back</a>
             </p>
         </div>
     </body>

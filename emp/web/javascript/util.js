@@ -6,7 +6,7 @@ function sendRequest(method, url, status, func, contenttype, body) {
             if (xhr.status === status) {
                 func(xhr.response);
             } else {
-                alert(xhr.status);
+                error(xhr.status);
             }
         }
     };
@@ -17,28 +17,28 @@ function sendRequest(method, url, status, func, contenttype, body) {
     xhr.send(body);
 }
 
-function getParams() {
+function param() {
     var sequence = window.location.search;
     map = new Object();
     if (sequence.length > 1) {
-        p = sequence.substr(1).split("&");
+        p = sequence.substr(1).split('&');
         for (var i = 0; i < p.length; i++) {
-            kv = p[i].split("=");
+            kv = p[i].split('=');
             key = decodeURIComponent(kv[0]);
             if (key.match(/\W/)) {
-                throw "Error: key \"" + key
-                        + "\" has non alphanumeric characters";
+                throw 'Error: key \'' + key
+                        + '\' has non alphanumeric characters';
             }
             if (key.charAt(0).match(/\d/)) {
-                throw "Error: key \"" + key
-                        + "\" has a leading numeric character";
+                throw 'Error: key \'' + key
+                        + '\' has a leading numeric character';
             }
             value = decodeURIComponent(kv[1]);
-            if (eval("map." + key + "!=undefined")) {
-                throw "Error: key \"" + key + "\" set multiple times";
+            if (eval('map.' + key + '!=undefined')) {
+                throw 'Error: key \'' + key + '\' set multiple times';
             }
             try {
-                eval("map." + key + "=value");
+                eval('map.' + key + '=value');
             } catch (err) {
             }
         }
@@ -59,4 +59,19 @@ function createComparator(property) {
             return 0;
         }
     };
+}
+
+function info(message) {
+    var div = document.createElement('div');
+    div.setAttribute('class', 'info');
+    div.innerHTML = message;
+    document.body.appendChild(div);
+}
+
+function error(message) {
+    var div = document.createElement('div');
+    div.setAttribute('class', 'error');
+    div.innerHTML = message;
+    document.body.appendChild(div);
+    console.log(message);
 }

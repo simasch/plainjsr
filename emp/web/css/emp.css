@@ -31,10 +31,36 @@ button {
     cursor: pointer;
 }
 
-div.main {
+div#main {
     margin-left: auto; 
     margin-right: auto; 
     width: 600px
+}
+
+div.info {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 0;
+    width: 300px;
+    height: 40px;
+    background-color: dodgerblue;
+    margin-left: auto;
+    margin-bottom: auto;
+    padding: 20px;
+}
+
+div.error {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 0;
+    width: 300px;
+    height: 40px;
+    background-color: tomato;
+    margin-left: auto;
+    margin-bottom: auto;
+    padding: 20px;
 }
 
 table.layout_table {

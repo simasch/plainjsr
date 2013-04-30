@@ -20,7 +20,7 @@
             function deleteEmployee(id) {
                 sendRequest('DELETE', '/emp/res/employees/' + id, 204, function() {
                     listEmployees();
-                    alert("Employee deleted");
+                    info("Employee deleted");
                 });
             }
 
@@ -46,13 +46,13 @@
 
                     var edit = document.createElement('a');
                     edit.setAttribute('href', 'edit.html?id=' + employee.id);
-                    var editText = document.createTextNode("Edit");
+                    var editText = document.createTextNode('Edit');
                     edit.appendChild(editText);
 
                     var del = document.createElement('a');
                     del.setAttribute('href', '#');
                     del.setAttribute('onclick', 'deleteEmployee(' + employee.id + ')');
-                    var delText = document.createTextNode("Delete");
+                    var delText = document.createTextNode('Delete');
                     del.appendChild(delText);
 
                     var cellFunction = row.insertCell(2);
@@ -92,7 +92,7 @@
         </script>
     </head>
     <body onload="listEmployees();">
-        <div class="main">
+        <div id="main">
             <div id="navigation">
                 <script>includeNavigation();</script>
             </div>
