@@ -63,15 +63,33 @@ function createComparator(property) {
 
 function info(message) {
     var div = document.createElement('div');
+    div.setAttribute('id', 'info');
     div.setAttribute('class', 'info');
-    div.innerHTML = message;
+    div.innerHTML = 'INFO<br />' + message;
     document.body.appendChild(div);
+
+    window.setTimeout("fade(el('info'))", 5000);
 }
 
 function error(message) {
     var div = document.createElement('div');
+    div.setAttribute('id', 'error');
     div.setAttribute('class', 'error');
-    div.innerHTML = message;
+    div.innerHTML = 'ERROR<br />' + message;
     document.body.appendChild(div);
-    console.log(message);
+
+    window.setTimeout("fade(el('error'))", 5000);
+}
+
+function fade(element) {
+    var opacity = 1;
+    var timer = setInterval(function() {
+        if (opacity <= 0.1) {
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = opacity;
+        element.style.filter = 'alpha(opacity=' + opacity * 100 + ")";
+        opacity -= opacity * 0.1;
+    }, 50);
 }

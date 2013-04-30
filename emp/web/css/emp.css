@@ -41,26 +41,35 @@ div.info {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 0;
+    z-index: 9999;
     width: 300px;
     height: 40px;
     background-color: dodgerblue;
+    color: white;
+    opacity: 0,8;
     margin-left: auto;
     margin-bottom: auto;
     padding: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: dodgerblue;
 }
 
 div.error {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 0;
+    z-index: 9999;
     width: 300px;
     height: 40px;
     background-color: tomato;
+    opacity: 0,8;
     margin-left: auto;
     margin-bottom: auto;
     padding: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: tomato;
 }
 
 table.layout_table {
