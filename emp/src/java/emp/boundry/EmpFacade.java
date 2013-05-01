@@ -1,4 +1,4 @@
-package jhr.boundry;
+package emp.boundry;
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -12,8 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import jhr.control.EmpService;
-import jhr.entity.Employee;
+import emp.control.EmpService;
+import emp.entity.Employee;
 
 @Path("employees")
 @Produces({"application/json"})
