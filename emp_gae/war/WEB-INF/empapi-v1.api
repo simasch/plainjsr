@@ -1,0 +1,194 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://jhcremp.appspot.com/_ah/api",
+  "name" : "empapi",
+  "version" : "v1",
+  "description" : "Employee API",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://jhcremp.appspot.com/_ah/spi",
+    "deadline" : 10.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "empapi.save" : {
+      "path" : "employees",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "emp.boundry.EmpEndpoint.save",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "empapi.get" : {
+      "path" : "employees/{id}",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "emp.boundry.EmpEndpoint.get",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "empapi.delete" : {
+      "path" : "employees/{id}",
+      "httpMethod" : "DELETE",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "emp.boundry.EmpEndpoint.delete",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "empapi.list" : {
+      "path" : "employees",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "emp.boundry.EmpEndpoint.list",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "Employee" : {
+        "id" : "Employee",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "Key"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "phones" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Phone"
+            }
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "namespace" : {
+            "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Phone" : {
+        "id" : "Phone",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "Key"
+          },
+          "number" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EmployeeCollection" : {
+        "id" : "EmployeeCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Employee"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "emp.boundry.EmpEndpoint.save" : {
+        "request" : {
+          "$ref" : "Employee"
+        }
+      },
+      "emp.boundry.EmpEndpoint.get" : {
+        "response" : {
+          "$ref" : "Employee"
+        }
+      },
+      "emp.boundry.EmpEndpoint.delete" : {
+      },
+      "emp.boundry.EmpEndpoint.list" : {
+        "response" : {
+          "$ref" : "EmployeeCollection"
+        }
+      }
+    }
+  }
+}

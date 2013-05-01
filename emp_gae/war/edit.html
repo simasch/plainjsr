@@ -15,9 +15,8 @@
 			employee = new Object();
 			el('emp_firstName').focus();
 		} else {
-			sendRequest('GET', '/emp/res/employees/' + id, 200, function(
-					response) {
-				employee = JSON.parse(response);
+			gapi.client.empapi.employees.get(id).execute(function(resp) {
+				employee = JSON.parse(resp);
 				fillForm();
 				fillTable();
 			});
@@ -65,9 +64,13 @@
 
 	function save() {
 		fillEmployee();
-		sendRequest('POST', '/emp/res/employees/', 204, function() {
-			info("Employee saved");
-		}, 'application/json', JSON.stringify(employee));
+		gapi.client.empapi.employees.save(employee).execute(function(resp) {
+			gapi.client.empapi.employees.get(id).execute(function(resp) {
+				employee = JSON.parse(resp);
+				fillForm();
+				fillTable();
+			});
+		});
 	}
 
 	function validateInput() {
@@ -222,10 +225,8 @@
 				</tbody>
 			</table>
 			<p>
-				<a href="#" onclick="addPhone();">Add Phone</a> <br />
-				<br />
-				<br /> <input type="submit" value="Save" />&nbsp;<a
-					href="index.html">Back</a>
+				<a href="#" onclick="addPhone();">Add Phone</a> <br /> <br /> <br />
+				<input type="submit" value="Save" />&nbsp;<a href="index.html">Back</a>
 			</p>
 
 		</form>
