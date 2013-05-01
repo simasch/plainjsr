@@ -9,18 +9,18 @@ import com.google.appengine.api.datastore.Key;
 @Entity
 public class Phone {
 
-    @Id
-    @GeneratedValue
-    private Key id;
-    private String number;
+	@Id
+	@GeneratedValue
+	private Key id;
+	private String number;
 
-    public String getNumber() {
-        return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
 	public Key getId() {
 		return id;

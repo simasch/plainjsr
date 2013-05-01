@@ -3,35 +3,46 @@ package emp.control;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import emp.entity.Employee;
 
 public class EmpService {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Employee> listEmployees() {
-        Query q = em.createQuery("select e from Employee e order by e.id");
-        List<Employee> list = q.getResultList();
-        return list;
-    }
+		EntityManager em = EMF.get().createEntityManager();
+		Query q = em.createQuery("select e from Employee e order by e.id");
+		List<Employee> list = q.getResultList();
+		em.close();
+		return list;
+	}
 
-    public Employee getEmployee(Long id) {
-        Employee e = em.find(Employee.class, id);
-        e.getPhones();
-        return e;
-    }
+	public Employee getEmployee(Long id) {
+		EntityManager em = EMF.get().createEntityManager();
+		Employee e = em.find(Employee.class, id);
+		e.getPhones();
+		em.close();
+		return e;
+	}
 
-    public void saveEmployee(Employee e) {
-        em.merge(e);
-    }
+	public void saveEmployee(Employee e) {
+		EntityManager em = EMF.get().createEntityManager();
+		EntityTransaction trx = em.getTransaction();
+		trx.begin();
+		em.merge(e);
+		trx.commit();
+		em.close();
+	}
 
-    public void deleteEmployee(Employee e) {
-        e = em.merge(e);
-        em.remove(e);
-    }
+	public void deleteEmployee(Employee e) {
+		EntityManager em = EMF.get().createEntityManager();
+		EntityTransaction trx = em.getTransaction();
+		trx.begin();
+		e = em.merge(e);
+		em.remove(e);
+		trx.commit();
+		em.close();
+	}
 }

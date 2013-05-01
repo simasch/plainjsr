@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>JHR Edit</title>
+        <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/util.js"></script>
+        <script src="javascript/navigation.js"></script>
+        <script>
+            var employee;
+
+            function getEmployee() {
+                var id = getParams().id;
+                if (id == null) {
+                    employee = new Object();
+                    employee.firstName = '';
+                    employee.lastName = '';
+                } else {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '/emp/res/employees/' + id, true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                employee = JSON.parse(xhr.response);
+                                fillForm();
+                                fillTable();
+                            } else {
+                                alert(xhr.status);
+                            }
+                        }
+                    };
+                    xhr.send(null);
+                }
+            }
+
+            function fillForm() {
+                el('emp_id').value = employee.id;
+                el('emp_firstName').value = employee.firstName;
+                el('emp_lastName').value = employee.lastName;
+            }
+
+            function fillTable() {
+                tbody.innerHTML = '';
+
+                for (var i in employee.phones) {
+                    var phone = employee.phones[i];
+                    var row = tbody.insertRow(i);
+                    if (i % 2 === 0) {
+                        row.className = 'result_even';
+                    } else {
+                        row.className = 'result_odd';
+                    }
+
+                    var cellNumber = row.insertCell(0);
+                    cellNumber.className = 'result';
+                    cellNumber.innerHTML = phone.number;
+
+                    var edit = document.createElement('a');
+                    edit.setAttribute('href', '#');
+                    var editText = document.createTextNode("Edit");
+                    edit.appendChild(editText);
+
+                    var del = document.createElement('a');
+                    del.setAttribute('href', '#');
+                    del.setAttribute('onclick', 'deletePhone(' + phone.id + ')');
+                    var delText = document.createTextNode("Delete");
+                    del.appendChild(delText);
+
+                    var cellFunction = row.insertCell(1);
+                    cellFunction.className = 'result';
+                    cellFunction.appendChild(edit);
+                    cellFunction.appendChild(document.createTextNode(" "));
+                    cellFunction.appendChild(del);
+                }
+            }
+
+            function save() {
+                fillEmployee();
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/emp/res/employees/", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 204) {
+                            alert("Employee saved");
+                            window.location = "/emp/index.html";
+                        } else {
+                            alert(xhr.status);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify(employee));
+            }
+
+            function fillEmployee() {
+                employee.firstName = el('emp_firstName').value;
+                employee.lastName = el('emp_lastName').value;
+            }
+
+            function addPhone() {
+                var row = tbody.insertRow(employee.phones.length);
+
+                var cellNumber = row.insertCell(0);
+                cellNumber.className = 'result';
+                cellNumber.innerHTML = '<input type="text" id="phone_number" />';
+
+                var save = document.createElement('a');
+                save.setAttribute('href', '#');
+                save.setAttribute('onclick', 'savePhone()');
+                var saveText = document.createTextNode("Save");
+                save.appendChild(saveText);
+
+                var cellFunction = row.insertCell(1);
+                cellFunction.className = 'result';
+                cellFunction.appendChild(save);
+            }
+
+            function savePhone() {
+                var phone = new Object();
+                phone.number = el('phone_number').value;
+                employee.phones[employee.phones.length] = phone;
+
+                fillTable();
+            }
+
+            function deletePhone(id) {
+                var j = 0;
+                var phones = [];
+                for (var i in employee.phones) {
+                    var phone = employee.phones[i];
+                    if (phone.id == id) {
+                    } else {
+                        phones[j] = phone;
+                        j++;
+                    }
+                }
+                employee.phones = phones;
+                fillTable();
+            }
+        </script>
+    </head>
+    <body onload="getEmployee();">
+        <div align="center">
+            <table>
+                <tr>
+                    <td>
+
+                        <div id="navigation">
+                            <script>includeNavigation();</script>
+                        </div>
+
+                        <h1>Employee Editor</h1>
+
+                        <table style="width: 600px;">
+                            <tr>
+                                <td>Id</td>
+                                <td><input type="text" id="emp_id" disabled /></td>
+                            </tr>
+                            <tr>
+                                <td>First name</td>
+                                <td><input type="text" id="emp_firstName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Last name</td>
+                                <td><input type="text" id="emp_lastName" /></td>
+                            </tr>
+                        </table>
+
+                        <h2>Phones</h2>
+
+                        <table class="result">
+                            <thead>
+                                <tr>
+                                    <th class="result">Number</th>
+                                    <th class="result" style="width: 100px"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                        <p>
+                            <a href="#" onclick="addPhone();">Add Phone</a>
+                            <br /><br /><br />
+                            <button onclick="save();">Save</button>&nbsp;<a href="javascript:history.back();">Back</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

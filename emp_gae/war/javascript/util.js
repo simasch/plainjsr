@@ -1,6 +1,10 @@
 function sendRequest(method, url, status, func, contenttype, body) {
     var xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
+    if (contenttype != null) {
+        xhr.setRequestHeader('Content-Type', contenttype);
+        console.log(body);
+    }
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === status) {
@@ -10,10 +14,6 @@ function sendRequest(method, url, status, func, contenttype, body) {
             }
         }
     };
-    if (contenttype != null) {
-        xhr.setRequestHeader('Content-Type', contenttype);
-        console.log(body);
-    }
     xhr.send(body);
 }
 

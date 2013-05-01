@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>JHR Style</title>
+        <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/navigation.js"></script>
+        <script>
+            var sort = 1;
+            var employees;
+
+            function listEmployees() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/emp/res/employees', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            employees = JSON.parse(xhr.response);
+                            createTableBody(employees);
+                        } else {
+                            alert(xhr.status);
+                        }
+                    }
+                };
+                xhr.send(null);
+            }
+
+            function deleteEmployee(id) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', '/emp/res/employees/' + id, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 204) {
+                            listEmployees();
+                            alert("Employee deleted");
+                        } else {
+                            alter(xhr.status);
+                        }
+                    }
+                };
+                xhr.send(null);
+            }
+
+            function createTableBody(emps) {
+                tbody.innerHTML = '';
+
+                for (var i in emps) {
+                    var employee = emps[i];
+                    var row = tbody.insertRow(i);
+                    if (i % 2 === 0) {
+                        row.className = 'result_even';
+                    } else {
+                        row.className = 'result_odd';
+                    }
+
+                    var cellFirstName = row.insertCell(0);
+                    cellFirstName.className = 'result';
+                    cellFirstName.innerHTML = employee.firstName;
+
+                    var cellLastName = row.insertCell(1);
+                    cellLastName.className = 'result';
+                    cellLastName.innerHTML = employee.lastName;
+
+                    var edit = document.createElement('a');
+                    edit.setAttribute('href', 'edit.html?id=' + employee.id);
+                    var editText = document.createTextNode("Edit");
+                    edit.appendChild(editText);
+
+                    var del = document.createElement('a');
+                    del.setAttribute('href', '#');
+                    del.setAttribute('onclick', 'deleteEmployee(' + employee.id + ')');
+                    var delText = document.createTextNode("Delete");
+                    del.appendChild(delText);
+
+                    var cellFunction = row.insertCell(2);
+                    cellFunction.className = 'result';
+                    cellFunction.appendChild(edit);
+                    cellFunction.appendChild(document.createTextNode(" "));
+                    cellFunction.appendChild(del);
+                }
+            }
+
+            function sortBy(property) {
+                employees.sort(createComparator(property));
+                if (sort % 2 === 0) {
+                    employees.reverse();
+                }
+                sort++;
+                createTableBody(employees);
+            }
+
+            function filter(property) {
+                var filteredEmployees = new Array();
+                var searchString = document.getElementById(property).value;
+                if (searchString !== '') {
+                    var j = 0;
+                    for (i in employees) {
+                        var employee = employees[i];
+                        if (employee[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+                            filteredEmployees[j] = employee;
+                            j++;
+                        }
+                    }
+                    createTableBody(filteredEmployees);
+                } else {
+                    createTableBody(employees);
+                }
+            }
+        </script>
+    </head>
+    <body onload="listEmployees();">
+        <div align="center">
+            <table>
+                <tr>
+                    <td>
+
+                        <div id="navigation">
+                            <script>includeNavigation();</script>
+                        </div>
+
+                        <h1>Employees</h1>
+
+                        <table class="result">
+                            <thead>
+                                <tr>
+                                    <th class="result" onclick="sortBy('firstName');" style="width:250px;">
+                                        First name<br />
+                                        <input id="firstName" type="text" onkeyup="filter('firstName');" />
+                                    </th>
+                                    <th class="result" onclick="sortBy('lastName');" style="width:250px;">
+                                        Last name<br />
+                                        <input id="lastName" type="text" onkeyup="filter('lastName');" />
+                                    </th>
+                                    <th class="result"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                        <br/>
+                        <a href="edit.html">Add Employee</a>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

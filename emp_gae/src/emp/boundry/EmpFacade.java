@@ -1,5 +1,7 @@
 package emp.boundry;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -16,47 +18,48 @@ import emp.control.EmpService;
 import emp.entity.Employee;
 
 @Path("employees")
-@Produces({"application/json"})
-@Consumes({"application/json"})
 public class EmpFacade {
 
-    private EmpService service;
+	private EmpService service;
 
-    public EmpFacade() {
-        service = new EmpService();
-    }
+	public EmpFacade() {
+		service = new EmpService();
+	}
 
-    @GET
-    public List<Employee> list() {
-        return service.listEmployees();
-    }
+	@GET
+	@Produces(APPLICATION_JSON)
+	public List<Employee> list() {
+		return service.listEmployees();
+	}
 
-    @GET
-    @Path("{id}")
-    public Employee get(@PathParam("id") Long id) throws WebApplicationException{
-        Employee e = service.getEmployee(id);
-        if (e == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-        else {
-            return e;
-        }
-    }
+	@GET
+	@Produces(APPLICATION_JSON)
+	@Path("{id}")
+	public Employee get(@PathParam("id") Long id)
+			throws WebApplicationException {
+		Employee e = service.getEmployee(id);
+		if (e == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		} else {
+			return e;
+		}
+	}
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
-        Employee e = service.getEmployee(id);
-        if (e == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-        else {
-            service.deleteEmployee(e);
-        }
-    }
+	@DELETE
+	@Consumes(APPLICATION_JSON)
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		Employee e = service.getEmployee(id);
+		if (e == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		} else {
+			service.deleteEmployee(e);
+		}
+	}
 
-    @POST
-    public void save(Employee e) {
-        service.saveEmployee(e);
-    }
+	@POST
+	@Consumes(APPLICATION_JSON)
+	public void save(Employee e) {
+		service.saveEmployee(e);
+	}
 }
