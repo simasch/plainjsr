@@ -3,8 +3,6 @@ package emp.boundry;
 import java.util.List;
 
 import javax.inject.Named;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -28,23 +26,15 @@ public class EmpEndpoint {
 	}
 
 	@ApiMethod(name = "get", path = "employees/{id}", httpMethod = HttpMethod.GET)
-	public Employee get(@Named("id") Long id) throws WebApplicationException {
+	public Employee get(@Named("id") Long id) {
 		Employee e = service.getEmployee(id);
-		if (e == null) {
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
-		} else {
-			return e;
-		}
+		return e;
 	}
 
 	@ApiMethod(name = "delete", path = "employees/{id}", httpMethod = HttpMethod.DELETE)
 	public void delete(@Named("id") Long id) {
 		Employee e = service.getEmployee(id);
-		if (e == null) {
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
-		} else {
-			service.deleteEmployee(e);
-		}
+		service.deleteEmployee(e);
 	}
 
 	@ApiMethod(name = "save", path = "employees", httpMethod = HttpMethod.POST)
