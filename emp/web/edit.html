@@ -100,7 +100,17 @@
             }
 
             function addPhone() {
-                var row = tbody.insertRow(getIndex());
+                addPhoneEditor(getIndex(), 'savePhone()');
+            }
+
+            function editPhone(index) {
+                tbody.deleteRow(index);
+                addPhoneEditor(index, 'updatePhone(' + index + ')');
+                el('phone_number').value = employee.phones[index].number;
+            }
+
+            function addPhoneEditor(index, onclick) {
+                var row = tbody.insertRow(index);
 
                 var input = document.createElement('input');
                 input.setAttribute('type', 'text');
@@ -113,7 +123,7 @@
 
                 var save = document.createElement('a');
                 save.setAttribute('href', '#');
-                save.setAttribute('onclick', 'savePhone()');
+                save.setAttribute('onclick', onclick);
                 var saveText = document.createTextNode('Save');
                 save.appendChild(saveText);
 
@@ -122,26 +132,6 @@
                 cellFunction.appendChild(save);
 
                 el('phone_number').focus();
-            }
-
-            function editPhone(index) {
-                tbody.deleteRow(index);
-                var row = tbody.insertRow(index);
-
-                var cellNumber = row.insertCell(0);
-                cellNumber.className = 'result';
-                cellNumber.innerHTML = '<input type="text" id="phone_number" />';
-                el('phone_number').value = employee.phones[index].number;
-
-                var save = document.createElement('a');
-                save.setAttribute('href', '#');
-                save.setAttribute('onclick', 'updatePhone(' + index + ')');
-                var saveText = document.createTextNode('Save');
-                save.appendChild(saveText);
-
-                var cellFunction = row.insertCell(1);
-                cellFunction.className = 'result';
-                cellFunction.appendChild(save);
             }
 
             function savePhone() {
