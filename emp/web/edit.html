@@ -36,11 +36,7 @@
                 for (var i in employee.phones) {
                     var phone = employee.phones[i];
                     var row = tbody.insertRow(i);
-                    if (i % 2 === 0) {
-                        row.className = 'result_even';
-                    } else {
-                        row.className = 'result_odd';
-                    }
+                    row.className = 'result';
 
                     var cellNumber = row.insertCell(0);
                     cellNumber.className = 'result';
@@ -216,6 +212,10 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
+                        <tr class="result">
+                            <td class="result">No phones found</td>
+                            <td class="result"></td>
+                        </tr>
                     </tbody>
                 </table>
                 <p>

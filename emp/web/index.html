@@ -30,11 +30,7 @@
                 for (var i in emps) {
                     var employee = emps[i];
                     var row = tbody.insertRow(i);
-                    if (i % 2 === 0) {
-                        row.className = 'result_even';
-                    } else {
-                        row.className = 'result_odd';
-                    }
+                    row.className = 'result';
 
                     var cellFirstName = row.insertCell(0);
                     cellFirstName.className = 'result';
@@ -121,6 +117,12 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
+                    <tr class="result">
+                        <td class="result">No employees found</td>
+                        <td class="result"></td>
+                        <td class="result"></td>
+                        <td class="result"></td>
+                    </tr>
                 </tbody>
             </table>
             <br/>
