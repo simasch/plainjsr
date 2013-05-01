@@ -1,2 +1,3 @@
-/emp/build/
-/emp/dist/
+/emp_javaee/build/
+/emp_javaee/dist/
+.metadata
