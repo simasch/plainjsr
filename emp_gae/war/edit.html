@@ -73,11 +73,7 @@
 	function save() {
 		fillEmployee();
 		gapi.client.empapi.save(employee).execute(function(resp) {
-			gapi.client.empapi.get(id).execute(function(resp) {
-				employee = JSON.parse(resp);
-				fillForm();
-				fillTable();
-			});
+			info("Employee saved");
 		});
 	}
 
@@ -190,7 +186,7 @@
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 </head>
-<body onload="init();">
+<body>
 	<div id="main">
 		<div id="navigation">
 			<script>

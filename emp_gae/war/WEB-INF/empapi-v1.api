@@ -7,7 +7,7 @@
   "description" : "Employee API",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "http://jhcremp.appspot.com/_ah/spi",
+    "bns" : "https://jhcremp.appspot.com/_ah/spi",
     "deadline" : 10.0,
     "type" : "lily"
   },
@@ -31,7 +31,7 @@
       "scopes" : [ ],
       "audiences" : [ ],
       "clientIds" : [ ],
-      "rosyMethod" : "EmpEndpoint.save",
+      "rosyMethod" : "emp.boundry.EmpEndpoint.save",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -46,7 +46,7 @@
       "scopes" : [ ],
       "audiences" : [ ],
       "clientIds" : [ ],
-      "rosyMethod" : "EmpEndpoint.get",
+      "rosyMethod" : "emp.boundry.EmpEndpoint.get",
       "request" : {
         "parameters" : {
           "id" : {
@@ -66,7 +66,7 @@
       "scopes" : [ ],
       "audiences" : [ ],
       "clientIds" : [ ],
-      "rosyMethod" : "EmpEndpoint.delete",
+      "rosyMethod" : "emp.boundry.EmpEndpoint.delete",
       "request" : {
         "parameters" : {
           "id" : {
@@ -86,7 +86,7 @@
       "scopes" : [ ],
       "audiences" : [ ],
       "clientIds" : [ ],
-      "rosyMethod" : "EmpEndpoint.list",
+      "rosyMethod" : "emp.boundry.EmpEndpoint.list",
       "request" : {
         "body" : "empty"
       },
@@ -101,11 +101,11 @@
         "id" : "Employee",
         "type" : "object",
         "properties" : {
-          "firstName" : {
-            "type" : "string"
-          },
           "id" : {
             "$ref" : "Key"
+          },
+          "firstName" : {
+            "type" : "string"
           },
           "lastName" : {
             "type" : "string"
@@ -122,24 +122,27 @@
         "id" : "Key",
         "type" : "object",
         "properties" : {
-          "complete" : {
-            "type" : "boolean"
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
           },
           "id" : {
             "type" : "string",
             "format" : "int64"
           },
-          "kind" : {
-            "type" : "string"
-          },
           "name" : {
-            "type" : "string"
-          },
-          "namespace" : {
             "type" : "string"
           },
           "parent" : {
             "$ref" : "Key"
+          },
+          "complete" : {
+            "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       },
@@ -169,19 +172,19 @@
       }
     },
     "methods" : {
-      "EmpEndpoint.save" : {
+      "emp.boundry.EmpEndpoint.save" : {
         "request" : {
           "$ref" : "Employee"
         }
       },
-      "EmpEndpoint.get" : {
+      "emp.boundry.EmpEndpoint.get" : {
         "response" : {
           "$ref" : "Employee"
         }
       },
-      "EmpEndpoint.delete" : {
+      "emp.boundry.EmpEndpoint.delete" : {
       },
-      "EmpEndpoint.list" : {
+      "emp.boundry.EmpEndpoint.list" : {
         "response" : {
           "$ref" : "EmployeeCollection"
         }

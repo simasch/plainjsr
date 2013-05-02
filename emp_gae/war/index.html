@@ -21,7 +21,7 @@
 	function listEmployees() {
 		gapi.client.empapi.list().execute(function(resp) {
 			console.log(resp);
-			employees = JSON.parse(reps);
+			employees = JSON.parse(resp);
 			createTableBody(employees);
 		});
 	}
