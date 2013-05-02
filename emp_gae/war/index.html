@@ -4,22 +4,22 @@
 <meta charset='utf-8'>
 <title>List Employees</title>
 <link rel="stylesheet" type="text/css" href="css/emp.css">
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="javascript/util.js"></script>
 <script src="javascript/navigation.js"></script>
 <script>
 	var ascending = true;
 	var employees;
 
-	function init() {
-		var empapi = 'http://localhost:8888/_ah/api';
-		gapi.client.load('empapi', 'v1', function() {
-			console.log("init");
-		}, employees);
+	var init = function() {
+		console.log("index init");
+		gapi.client.load("empapi", "v1", function() {
+			console.log("index list");
+			listEmployees();
+		}, "/_ah/api");
 	}
-	
+
 	function listEmployees() {
-		gapi.empapi.list().execute(function(resp) {
+		gapi.client.empapi.list().execute(function(resp) {
 			console.log(resp);
 			employees = JSON.parse(reps);
 			createTableBody(employees);
@@ -27,7 +27,7 @@
 	}
 
 	function deleteEmployee(id) {
-		gapi.empapi.delete(id).execute(function(resp) {
+		gapi.client.empapi.delete(id).execute(function(resp) {
 			listEmployees();
 			info("Employee deleted");
 		});
@@ -100,8 +100,9 @@
 		}
 	}
 </script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </head>
-<body onload="init();listEmployees();">
+<body>
 	<div id="main">
 		<div id="navigation">
 			<script>

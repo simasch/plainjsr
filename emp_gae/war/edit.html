@@ -9,13 +9,21 @@
 <script>
 	var employee;
 
+	var init = function() {
+		console.log("edit init");
+		gapi.client.load("empapi", "v1", function() {
+			console.log("edit get");
+			getEmployee();
+		}, "/_ah/api");
+	}
+
 	function getEmployee() {
 		var id = param().id;
 		if (id == null) {
 			employee = new Object();
 			el('emp_firstName').focus();
 		} else {
-			gapi.client.empapi.employees.get(id).execute(function(resp) {
+			gapi.client.empapi.get(id).execute(function(resp) {
 				employee = JSON.parse(resp);
 				fillForm();
 				fillTable();
@@ -64,8 +72,8 @@
 
 	function save() {
 		fillEmployee();
-		gapi.client.empapi.employees.save(employee).execute(function(resp) {
-			gapi.client.empapi.employees.get(id).execute(function(resp) {
+		gapi.client.empapi.save(employee).execute(function(resp) {
+			gapi.client.empapi.get(id).execute(function(resp) {
 				employee = JSON.parse(resp);
 				fillForm();
 				fillTable();
@@ -180,8 +188,9 @@
 		return index;
 	}
 </script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </head>
-<body onload="getEmployee();">
+<body onload="init();">
 	<div id="main">
 		<div id="navigation">
 			<script>
