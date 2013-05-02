@@ -2,8 +2,8 @@ package emp.entity;
 
 import static javax.persistence.CascadeType.ALL;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Employee {
 	private String lastName;
 
 	@OneToMany(cascade = ALL)
-	private Set<Phone> phones = new HashSet<Phone>();
+	private List<Phone> phones = new ArrayList<Phone>();
 
 	public String getFirstName() {
 		return firstName;
@@ -40,11 +40,11 @@ public class Employee {
 		this.lastName = lastName;
 	}
 
-	public Set<Phone> getPhones() {
+	public List<Phone> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(Set<Phone> phones) {
+	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
 
