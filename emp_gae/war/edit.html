@@ -8,20 +8,13 @@
 <script>
 	var employee;
 
-	var init = function() {
-		gapi.client.load("empapi", "v1", function() {
-			getEmployee();
-		}, "/_ah/api");
-	}
-
 	function getEmployee() {
 		var id = param().id;
 		if (id == null) {
 			employee = new Object();
 			el('emp_firstName').focus();
 		} else {
-			sendRequest('GET', '/_ah/api/empapi/v1/employees/' + id, 200, function(
-					response) {
+			sendRequest('GET', '/employees/' + id, 200, function(response) {
 				employee = JSON.parse(response);
 				fillForm();
 				fillTable();
@@ -70,9 +63,12 @@
 
 	function save() {
 		fillEmployee();
-		gapi.client.empapi.save(employee).execute(function(response) {
+		sendRequest('POST', '/employees', 200, function(response) {
 			info("Employee saved");
-		});
+			employee = JSON.parse(response);
+			fillForm();
+			fillTable();
+		}, 'application/json', JSON.stringify(employee));
 	}
 
 	function validateInput() {
@@ -182,9 +178,8 @@
 		return index;
 	}
 </script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </head>
-<body>
+<body onload="getEmployee();">
 	<div id="main">
 		<div id="navigation">
 			<script src="javascript/navigation.js"></script>

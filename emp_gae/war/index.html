@@ -9,22 +9,15 @@
 	var ascending = true;
 	var employees;
 
-	var init = function() {
-		gapi.client.load("empapi", "v1", function() {
-			listEmployees();
-		}, "/_ah/api");
-	}
-
 	function listEmployees() {
-		gapi.client.empapi.list().execute(function(response) {
-			console.log(response);
-			employees = response.items;
+		sendRequest('GET', '/employees', 200, function(response) {
+			employees = JSON.parse(response);
 			createTableBody(employees);
 		});
 	}
 
 	function deleteEmployee(id) {
-		gapi.client.empapi.delete(id).execute(function(response) {
+		sendRequest('DELETE', '/employees/' + id, 200, function(response) {
 			listEmployees();
 			info("Employee deleted");
 		});
@@ -97,9 +90,8 @@
 		}
 	}
 </script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </head>
-<body>
+<body onload="listEmployees();">
 	<div id="main">
 		<div id="navigation">
 			<script src="javascript/navigation.js"></script>

@@ -4,11 +4,20 @@
 	</welcome-file-list>
 
 	<servlet>
+		<servlet-name>EmpServlet</servlet-name>
+		<servlet-class>emp.boundry.EmpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpServlet</servlet-name>
+		<url-pattern>/employees/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>
 		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
 		<init-param>
 			<param-name>services</param-name>
-			<param-value>emp.boundry.EmpEndpoint</param-value>
+			<param-value/>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
