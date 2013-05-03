@@ -2,9 +2,8 @@ package emp.control;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 import emp.entity.Employee;
 
@@ -12,37 +11,40 @@ public class EmpService {
 
 	@SuppressWarnings("unchecked")
 	public List<Employee> listEmployees() {
-		EntityManager em = EMF.get().createEntityManager();
-		Query q = em.createQuery("select e from Employee e order by e.id");
-		List<Employee> list = q.getResultList();
-		em.close();
-		return list;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			Query q = pm.newQuery(Employee.class);
+			List<Employee> list = (List<Employee>) q.execute();
+			return list;
+		} finally {
+			pm.close();
+		}
 	}
 
-	public Employee getEmployee(Long id) {
-		EntityManager em = EMF.get().createEntityManager();
-		Employee e = em.find(Employee.class, id);
-		e.getPhones();
-		em.close();
-		return e;
+	public Employee getEmployee(String id) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			return pm.getObjectById(Employee.class, id);
+		} finally {
+			pm.close();
+		}
 	}
 
 	public void saveEmployee(Employee e) {
-		EntityManager em = EMF.get().createEntityManager();
-		EntityTransaction trx = em.getTransaction();
-		trx.begin();
-		em.merge(e);
-		trx.commit();
-		em.close();
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			pm.makePersistent(e);
+		} finally {
+			pm.close();
+		}
 	}
 
 	public void deleteEmployee(Employee e) {
-		EntityManager em = EMF.get().createEntityManager();
-		EntityTransaction trx = em.getTransaction();
-		trx.begin();
-		e = em.merge(e);
-		em.remove(e);
-		trx.commit();
-		em.close();
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			pm.deletePersistent(e);
+		} finally {
+			pm.close();
+		}
 	}
 }

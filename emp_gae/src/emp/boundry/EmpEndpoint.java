@@ -26,13 +26,13 @@ public class EmpEndpoint {
 	}
 
 	@ApiMethod(name = "get", path = "employees/{id}", httpMethod = HttpMethod.GET)
-	public Employee get(@Named("id") Long id) {
+	public Employee get(@Named("id") String id) {
 		Employee e = service.getEmployee(id);
 		return e;
 	}
 
 	@ApiMethod(name = "delete", path = "employees/{id}", httpMethod = HttpMethod.DELETE)
-	public void delete(@Named("id") Long id) {
+	public void delete(@Named("id") String id) {
 		Employee e = service.getEmployee(id);
 		service.deleteEmployee(e);
 	}

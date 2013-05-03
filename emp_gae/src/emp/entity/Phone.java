@@ -1,17 +1,20 @@
 package emp.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.jdo.annotations.Extension;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-
-@Entity
+@PersistenceCapable
 public class Phone {
 
-	@Id
-	@GeneratedValue
-	private Key id;
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
+
+	@Persistent
 	private String number;
 
 	public String getNumber() {
@@ -22,11 +25,12 @@ public class Phone {
 		this.number = number;
 	}
 
-	public Key getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
 	}
+
 }

@@ -5,14 +5,11 @@
 <title>Edit Employee</title>
 <link rel="stylesheet" type="text/css" href="css/emp.css">
 <script src="javascript/util.js"></script>
-<script src="javascript/navigation.js"></script>
 <script>
 	var employee;
 
 	var init = function() {
-		console.log("edit init");
 		gapi.client.load("empapi", "v1", function() {
-			console.log("edit get");
 			getEmployee();
 		}, "/_ah/api");
 	}
@@ -23,8 +20,9 @@
 			employee = new Object();
 			el('emp_firstName').focus();
 		} else {
-			gapi.client.empapi.get(id).execute(function(resp) {
-				employee = JSON.parse(resp);
+			sendRequest('GET', '/_ah/api/empapi/v1/employees/' + id, 200, function(
+					response) {
+				employee = JSON.parse(response);
 				fillForm();
 				fillTable();
 			});
@@ -72,7 +70,7 @@
 
 	function save() {
 		fillEmployee();
-		gapi.client.empapi.save(employee).execute(function(resp) {
+		gapi.client.empapi.save(employee).execute(function(response) {
 			info("Employee saved");
 		});
 	}
@@ -189,9 +187,7 @@
 <body>
 	<div id="main">
 		<div id="navigation">
-			<script>
-				includeNavigation();
-			</script>
+			<script src="javascript/navigation.js"></script>
 		</div>
 
 		<h1>Employee Editor</h1>
