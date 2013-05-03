@@ -54,7 +54,7 @@
 
                     var del = document.createElement('a');
                     del.setAttribute('href', '#');
-                    del.setAttribute('onclick', 'deletePhone(' + phone.id + ')');
+                    del.setAttribute('onclick', 'deletePhone(' + i + ')');
                     var delText = document.createTextNode('Delete');
                     del.appendChild(delText);
 
@@ -159,17 +159,8 @@
                 fillTable();
             }
 
-            function deletePhone(id) {
-                var j = 0;
-                var phones = [];
-                for (var i in employee.phones) {
-                    var phone = employee.phones[i];
-                    if (phone.id != id) {
-                        phones[j] = phone;
-                        j++;
-                    }
-                }
-                employee.phones = phones;
+            function deletePhone(index) {
+                employee.phones.splice(index, 1);
                 fillTable();
             }
 
