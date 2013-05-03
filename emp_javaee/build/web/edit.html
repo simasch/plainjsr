@@ -16,11 +16,15 @@
                     el('emp_firstName').focus();
                 } else {
                     sendRequest('GET', '/emp/res/employees/' + id, 200, function(response) {
-                        employee = JSON.parse(response);
-                        fillForm();
-                        fillTable();
+                        parseAndFill(response);
                     });
                 }
+            }
+
+            function parseAndFill(response) {
+                employee = JSON.parse(response);
+                fillForm();
+                fillTable();
             }
 
             function fillForm() {
@@ -64,7 +68,8 @@
 
             function save() {
                 fillEmployee();
-                sendRequest('POST', '/emp/res/employees/', 204, function() {
+                sendRequest('POST', '/emp/res/employees/', 200, function(response) {
+                    parseAndFill(response);
                     info("Employee saved");
                 }, 'application/json', JSON.stringify(employee));
             }
@@ -180,7 +185,7 @@
     <body onload="getEmployee();">
         <div id="main">
             <div id="navigation">
-                <script>includeNavigation();</script>
+                <script src="javascript/navigation.js"></script>
             </div>
 
             <h1>Employee Editor</h1>

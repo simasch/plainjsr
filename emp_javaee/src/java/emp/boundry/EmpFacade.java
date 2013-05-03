@@ -57,7 +57,7 @@ public class EmpFacade {
     }
 
     @POST
-    public void save(Employee e) {
-        service.saveEmployee(e);
+    public Employee save(Employee e) {
+        return service.saveEmployee(e);
     }
 }

@@ -35,8 +35,10 @@ public class EmpService {
     }
 
     @TransactionAttribute(REQUIRED)
-    public void saveEmployee(Employee e) {
-        em.merge(e);
+    public Employee saveEmployee(Employee e) {
+        e = em.merge(e);
+        em.flush();
+        return e;
     }
 
     @TransactionAttribute(REQUIRED)
