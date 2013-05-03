@@ -38,7 +38,7 @@ public class EmpEndpoint {
 	}
 
 	@ApiMethod(name = "save", path = "employees", httpMethod = HttpMethod.POST)
-	public void save(Employee e) {
-		service.saveEmployee(e);
+	public Employee save(Employee e) {
+		return service.saveEmployee(e);
 	}
 }

@@ -30,10 +30,11 @@ public class EmpService {
 		}
 	}
 
-	public void saveEmployee(Employee e) {
+	public Employee saveEmployee(Employee e) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-			pm.makePersistent(e);
+			e = pm.makePersistent(e);
+			return e;
 		} finally {
 			pm.close();
 		}

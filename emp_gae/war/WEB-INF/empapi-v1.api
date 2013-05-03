@@ -37,7 +37,7 @@
         "bodyName" : "resource"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "empapi.get" : {
@@ -146,6 +146,9 @@
     "methods" : {
       "EmpEndpoint.save" : {
         "request" : {
+          "$ref" : "Employee"
+        },
+        "response" : {
           "$ref" : "Employee"
         }
       },
