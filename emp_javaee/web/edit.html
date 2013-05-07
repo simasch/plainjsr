@@ -85,7 +85,7 @@
             }
 
             function keyOnPhone(index) {
-                if (window.event.keyCode === 13) {
+                if (event.keyCode === 13) {
                     initializePhones();
                     if (employee.phones[index] === undefined) {
                         savePhone();
