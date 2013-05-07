@@ -52,8 +52,7 @@
                         var del = document.createElement("a");
                         del.setAttribute("href", "#");
                         del.setAttribute("onclick", "deletePhone(" + i + ")");
-                        var delText = document.createTextNode("Delete");
-                        del.appendChild(delText);
+                        del.appendChild(document.createTextNode("Delete"));
 
                         var cellFunction = row.insertCell(1);
                         cellFunction.className = "result";

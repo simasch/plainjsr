@@ -43,29 +43,28 @@
                         var row = table.insertRow(i);
                         row.className = "result";
 
+                        var onclickEdit = "window.location = 'edit.html?id=" +
+                                employee.id + "'";
+
                         var cellId = row.insertCell(0);
                         cellId.className = "result edit";
                         cellId.innerHTML = employee.id;
-                        cellId.setAttribute("onclick",
-                                "window.location = 'edit.html?id=" + employee.id + "'");
+                        cellId.setAttribute("onclick", onclickEdit);
 
                         var cellFirstName = row.insertCell(1);
                         cellFirstName.className = "result edit";
                         cellFirstName.innerHTML = employee.firstName;
-                        cellFirstName.setAttribute("onclick",
-                                "window.location = 'edit.html?id=" + employee.id + "'");
+                        cellFirstName.setAttribute("onclick", onclickEdit);
 
                         var cellLastName = row.insertCell(2);
                         cellLastName.className = "result edit";
                         cellLastName.innerHTML = employee.lastName;
-                        cellLastName.setAttribute("onclick",
-                                "window.location = 'edit.html?id=" + employee.id + "'");
+                        cellLastName.setAttribute("onclick", onclickEdit);
 
                         var del = document.createElement("a");
                         del.setAttribute("href", "#");
                         del.setAttribute("onclick", "deleteEmployee(" + employee.id + ")");
-                        var delText = document.createTextNode("Delete");
-                        del.appendChild(delText);
+                        del.appendChild(document.createTextNode("Delete"));
 
                         var cellFunction = row.insertCell(3);
                         cellFunction.className = "result";
