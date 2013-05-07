@@ -85,7 +85,7 @@
             }
 
             function keyOnPhone(index) {
-                if (event.keyCode === 13) {
+                if (window.event.keyCode === 13) {
                     initializePhones();
                     if (employee.phones[index] === undefined) {
                         savePhone();
@@ -100,6 +100,7 @@
             }
 
             function editPhone(index) {
+                var table = el("phone_table");
                 table.deleteRow(index);
                 addPhoneEditor(index, "updatePhone(" + index + ")");
                 el("phone_number").value = employee.phones[index].number;
