@@ -81,6 +81,10 @@ td.result {
     padding: 15px;
 }
 
+tr.edit{
+    cursor: pointer;
+}
+
 th.result {
     background: linear-gradient(#B4D179, #8AB92A);
     padding: 15px;
