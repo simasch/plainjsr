@@ -1,3 +1,5 @@
 /emp_javaee/build/
 /emp_javaee/dist/
 .metadata
+/emp_gae/war/WEB-INF/classes
+/emp_gae/war/WEB-INF/appengine-generated
