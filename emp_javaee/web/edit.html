@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='utf-8'>
+        <meta charset="utf-8">
         <title>Edit Employee</title>
         <link rel="stylesheet" type="text/css" href="css/emp.css">
         <script src="javascript/util.js"></script>
@@ -11,11 +11,11 @@
 
             function getEmployee() {
                 var id = param().id;
-                if (id == null) {
+                if (id === undefined) {
                     employee = new Object();
-                    el('emp_firstName').focus();
+                    el("emp_firstName").focus();
                 } else {
-                    sendRequest('GET', '/emp/res/employees/' + id, 200, function(response) {
+                    sendRequest("GET", "/emp/res/employees/" + id, 200, function(response) {
                         parseAndFill(response);
                     });
                 }
@@ -28,38 +28,38 @@
             }
 
             function fillForm() {
-                el('emp_id').value = employee.id;
-                el('emp_firstName').value = employee.firstName;
-                el('emp_lastName').value = employee.lastName;
-                el('emp_firstName').focus();
+                el("emp_id").value = employee.id;
+                el("emp_firstName").value = employee.firstName;
+                el("emp_lastName").value = employee.lastName;
+                el("emp_firstName").focus();
             }
 
             function fillTable() {
-                tbody.innerHTML = '';
+                tbody.innerHTML = "";
 
                 for (var i in employee.phones) {
                     var phone = employee.phones[i];
                     var row = tbody.insertRow(i);
-                    row.className = 'result';
+                    row.className = "result";
 
                     var cellNumber = row.insertCell(0);
-                    cellNumber.className = 'result';
+                    cellNumber.className = "result";
                     cellNumber.innerHTML = phone.number;
 
-                    var edit = document.createElement('a');
-                    edit.setAttribute('href', '#');
-                    edit.setAttribute('onclick', 'editPhone(' + i + ')');
-                    var editText = document.createTextNode('Edit');
+                    var edit = document.createElement("a");
+                    edit.setAttribute("href", "#");
+                    edit.setAttribute("onclick", "editPhone(" + i + ")");
+                    var editText = document.createTextNode("Edit");
                     edit.appendChild(editText);
 
-                    var del = document.createElement('a');
-                    del.setAttribute('href', '#');
-                    del.setAttribute('onclick', 'deletePhone(' + i + ')');
-                    var delText = document.createTextNode('Delete');
+                    var del = document.createElement("a");
+                    del.setAttribute("href", "#");
+                    del.setAttribute("onclick", "deletePhone(" + i + ")");
+                    var delText = document.createTextNode("Delete");
                     del.appendChild(delText);
 
                     var cellFunction = row.insertCell(1);
-                    cellFunction.className = 'result';
+                    cellFunction.className = "result";
                     cellFunction.appendChild(edit);
                     cellFunction.appendChild(document.createTextNode(" "));
                     cellFunction.appendChild(del);
@@ -68,31 +68,30 @@
 
             function save() {
                 fillEmployee();
-                sendRequest('POST', '/emp/res/employees/', 200, function(response) {
+                sendRequest("POST", "/emp/res/employees/", 200, function(response) {
                     parseAndFill(response);
                     info("Employee saved");
-                }, 'application/json', JSON.stringify(employee));
+                }, "application/json", JSON.stringify(employee));
             }
 
             function validateInput() {
-                if (el('phone_number') != null && el('phone_number').value === '') {
-                    error('Phone number is empty!');
-                    el('phone_number').focus();
+                if (el("phone_number").value === "") {
+                    error("Phone number is empty!");
+                    el("phone_number").focus();
                     return false;
                 }
                 return true;
             }
 
             function fillEmployee() {
-                employee.firstName = el('emp_firstName').value;
-                employee.lastName = el('emp_lastName').value;
+                employee.firstName = el("emp_firstName").value;
+                employee.lastName = el("emp_lastName").value;
             }
 
             function keyOnPhone(index) {
                 if (event.keyCode === 13) {
                     initializePhones();
-                    var phone = employee.phones[index];
-                    if (phone == null) {
+                    if (employee.phones[index] === undefined) {
                         savePhone();
                     } else {
                         updatePhone();
@@ -101,44 +100,44 @@
             }
 
             function addPhone() {
-                addPhoneEditor(getIndex(), 'savePhone()');
+                addPhoneEditor(getIndex(), "savePhone()");
             }
 
             function editPhone(index) {
                 tbody.deleteRow(index);
-                addPhoneEditor(index, 'updatePhone(' + index + ')');
-                el('phone_number').value = employee.phones[index].number;
+                addPhoneEditor(index, "updatePhone(" + index + ")");
+                el("phone_number").value = employee.phones[index].number;
             }
 
             function addPhoneEditor(index, onclick) {
                 var row = tbody.insertRow(index);
 
-                var input = document.createElement('input');
-                input.setAttribute('type', 'text');
-                input.setAttribute('id', 'phone_number');
-                input.setAttribute('onkeyDown', 'keyOnPhone(' + getIndex() + ')');
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("id", "phone_number");
+                input.setAttribute("onkeyDown", "keyOnPhone(" + getIndex() + ")");
 
                 var cellNumber = row.insertCell(0);
-                cellNumber.className = 'result';
+                cellNumber.className = "result";
                 cellNumber.appendChild(input);
 
-                var save = document.createElement('a');
-                save.setAttribute('href', '#');
-                save.setAttribute('onclick', onclick);
-                var saveText = document.createTextNode('Save');
+                var save = document.createElement("a");
+                save.setAttribute("href", "#");
+                save.setAttribute("onclick", onclick);
+                var saveText = document.createTextNode("Save");
                 save.appendChild(saveText);
 
                 var cellFunction = row.insertCell(1);
-                cellFunction.className = 'result';
+                cellFunction.className = "result";
                 cellFunction.appendChild(save);
 
-                el('phone_number').focus();
+                el("phone_number").focus();
             }
 
             function savePhone() {
                 if (validateInput()) {
                     var phone = new Object();
-                    phone.number = el('phone_number').value;
+                    phone.number = el("phone_number").value;
                     initializePhones();
                     employee.phones[getIndex()] = phone;
 
@@ -154,7 +153,7 @@
 
             function updatePhone(index) {
                 var phone = employee.phones[index];
-                phone.number = el('phone_number').value;
+                phone.number = el("phone_number").value;
 
                 fillTable();
             }
