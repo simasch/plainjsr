@@ -42,10 +42,10 @@
                     for (var i in employee.phones) {
                         var phone = employee.phones[i];
                         var row = table.insertRow(i);
-                        row.className = "result edit";
+                        row.className = "result";
 
                         var cellNumber = row.insertCell(0);
-                        cellNumber.className = "result";
+                        cellNumber.className = "result edit";
                         cellNumber.innerHTML = phone.number;
                         cellNumber.setAttribute("onclick", "editPhone(" + i + ")");
 
@@ -112,7 +112,7 @@
                 if (cell0.innerHTML.indexOf("No") !== -1) {
                     table.deleteRow(0);
                 }
-                
+
                 var row = table.insertRow(index);
                 row.className = "result";
 
@@ -158,7 +158,6 @@
             function updatePhone(index) {
                 var phone = employee.phones[index];
                 phone.number = el("phone_number").value;
-
                 fillTable();
             }
 
@@ -168,11 +167,7 @@
             }
 
             function getIndex() {
-                var index = 0;
-                if (employee.phones != null && employee.phones.length != null) {
-                    index = employee.phones.length;
-                }
-                return index;
+                return employee.phones === undefined ? 0 : employee.phones.length;
             }
         </script>
     </head>

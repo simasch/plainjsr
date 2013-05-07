@@ -41,22 +41,22 @@
                     for (var i in emps) {
                         var employee = emps[i];
                         var row = table.insertRow(i);
-                        row.className = "result edit";
+                        row.className = "result";
 
                         var cellId = row.insertCell(0);
-                        cellId.className = "result";
+                        cellId.className = "result edit";
                         cellId.innerHTML = employee.id;
                         cellId.setAttribute("onclick",
                                 "window.location = 'edit.html?id=" + employee.id + "'");
 
                         var cellFirstName = row.insertCell(1);
-                        cellFirstName.className = "result";
+                        cellFirstName.className = "result edit";
                         cellFirstName.innerHTML = employee.firstName;
                         cellFirstName.setAttribute("onclick",
                                 "window.location = 'edit.html?id=" + employee.id + "'");
 
                         var cellLastName = row.insertCell(2);
-                        cellLastName.className = "result";
+                        cellLastName.className = "result edit";
                         cellLastName.innerHTML = employee.lastName;
                         cellLastName.setAttribute("onclick",
                                 "window.location = 'edit.html?id=" + employee.id + "'");

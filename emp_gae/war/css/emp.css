@@ -81,9 +81,6 @@ td.result {
     padding: 15px;
 }
 
-tr.edit{
-    cursor: pointer;
-}
 
 th.result {
     background: linear-gradient(#B4D179, #8AB92A);
@@ -97,3 +94,7 @@ tr.result:last-child td:first-child { border-radius: 0 0 0 9px; }
 tr.result:last-child td:last-child { border-radius: 0 0 9px 0; }
 tr.result:nth-child(even) { background: #B4D179; }
 tr.result:nth-child(odd) { background: #E6F8C0; }
+
+.edit{
+    cursor: pointer;
+}
