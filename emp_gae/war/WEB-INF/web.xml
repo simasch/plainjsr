@@ -9,7 +9,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EmpServlet</servlet-name>
-		<url-pattern>/employees/*</url-pattern>
+		<url-pattern>/emp/res/employees/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

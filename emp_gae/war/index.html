@@ -1,129 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset='utf-8'>
-<title>List Employees</title>
-<link rel="stylesheet" type="text/css" href="css/emp.css">
-<script src="javascript/util.js"></script>
-<script>
-	var ascending = true;
-	var employees;
+    <head>
+        <meta charset="utf-8">
+        <title>List Employees</title>
+        <link rel="stylesheet" type="text/css" href="css/emp.css">
+        <script src="javascript/util.js"></script>
+        <script>
+            var ascending = true;
+            var employees;
 
-	function listEmployees() {
-		sendRequest('GET', '/employees', 200, function(response) {
-			employees = JSON.parse(response);
-			createTableBody(employees);
-		});
-	}
+            function listEmployees() {
+                sendRequest("GET", "/emp/res/employees", 200, function(response) {
+                    employees = JSON.parse(response);
+                    createTableBody(employees);
+                });
+            }
 
-	function deleteEmployee(id) {
-		sendRequest('DELETE', '/employees/' + id, 200, function(response) {
-			listEmployees();
-			info("Employee deleted");
-		});
-	}
+            function deleteEmployee(id) {
+                sendRequest("DELETE", "/emp/res/employees/" + id, 204, function() {
+                    listEmployees();
+                    info("Employee deleted");
+                });
+            }
 
-	function createTableBody(emps) {
-		tbody.innerHTML = '';
+            function createTableBody(emps) {
+                var table = el("emp_table");
+                table.innerHTML = "";
 
-		for ( var i in emps) {
-			var employee = emps[i];
-			var row = tbody.insertRow(i);
-			row.className = 'result';
+                if (emps.length === 0) {
+                    var employee = emps[i];
+                    var row = table.insertRow(i);
+                    row.className = "result edit";
 
-			var cellFirstName = row.insertCell(0);
-			cellFirstName.className = 'result';
-			cellFirstName.innerHTML = employee.id;
+                    var cellId = row.insertCell(0);
+                    cellId.className = "result";
+                    cellId.innerHTML = "No Employees found";
+                    cellId.setAttribute("colspan", 4);
+                }
+                else {
+                    for (var i in emps) {
+                        var employee = emps[i];
+                        var row = table.insertRow(i);
+                        row.className = "result edit";
 
-			var cellFirstName = row.insertCell(1);
-			cellFirstName.className = 'result';
-			cellFirstName.innerHTML = employee.firstName;
+                        var cellId = row.insertCell(0);
+                        cellId.className = "result";
+                        cellId.innerHTML = employee.id;
+                        cellId.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-			var cellLastName = row.insertCell(2);
-			cellLastName.className = 'result';
-			cellLastName.innerHTML = employee.lastName;
+                        var cellFirstName = row.insertCell(1);
+                        cellFirstName.className = "result";
+                        cellFirstName.innerHTML = employee.firstName;
+                        cellFirstName.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-			var edit = document.createElement('a');
-			edit.setAttribute('href', 'edit.html?id=' + employee.id);
-			var editText = document.createTextNode('Edit');
-			edit.appendChild(editText);
+                        var cellLastName = row.insertCell(2);
+                        cellLastName.className = "result";
+                        cellLastName.innerHTML = employee.lastName;
+                        cellLastName.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-			var del = document.createElement('a');
-			del.setAttribute('href', '#');
-			del.setAttribute('onclick', 'deleteEmployee(' + employee.id + ')');
-			var delText = document.createTextNode('Delete');
-			del.appendChild(delText);
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteEmployee(" + employee.id + ")");
+                        var delText = document.createTextNode("Delete");
+                        del.appendChild(delText);
 
-			var cellFunction = row.insertCell(3);
-			cellFunction.className = 'result';
-			cellFunction.appendChild(edit);
-			cellFunction.appendChild(document.createTextNode(" "));
-			cellFunction.appendChild(del);
-		}
-	}
+                        var cellFunction = row.insertCell(3);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
+                }
+            }
 
-	function sortBy(property) {
-		employees.sort(createComparator(property));
-		if (ascending) {
-			employees.reverse();
-		}
-		ascending = !ascending;
-		createTableBody(employees);
-	}
+            function sortBy(property) {
+                employees.sort(createComparator(property));
+                if (ascending) {
+                    employees.reverse();
+                }
+                ascending = !ascending;
+                createTableBody(employees);
+            }
 
-	function filter(property) {
-		var filteredEmployees = new Array();
-		var searchString = document.getElementById(property).value;
-		if (searchString !== '') {
-			var j = 0;
-			for (i in employees) {
-				var employee = employees[i];
-				if (employee[property].toLowerCase().indexOf(
-						searchString.toLowerCase()) !== -1) {
-					filteredEmployees[j] = employee;
-					j++;
-				}
-			}
-			createTableBody(filteredEmployees);
-		} else {
-			createTableBody(employees);
-		}
-	}
-</script>
-</head>
-<body onload="listEmployees();">
-	<div id="main">
-		<div id="navigation">
-			<script src="javascript/navigation.js"></script>
-		</div>
+            function filter(property) {
+                var filteredEmployees = new Array();
+                var searchString = document.getElementById(property).value;
+                if (searchString !== "") {
+                    var j = 0;
+                    for (i in employees) {
+                        var employee = employees[i];
+                        if (employee[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+                            filteredEmployees[j] = employee;
+                            j++;
+                        }
+                    }
+                    createTableBody(filteredEmployees);
+                } else {
+                    createTableBody(employees);
+                }
+            }
+        </script>
+    </head>
+    <body onload="listEmployees();">
+        <div id="main">
+            <div id="navigation">
+                <script src="javascript/navigation.js"></script>
+            </div>
 
-		<h1>Employees</h1>
+            <h1>Employees</h1>
 
-		<table class="result">
-			<thead>
-				<tr>
-					<th class="result" onclick="sortBy('id');" style="width: 50px;">
-						ID</th>
-					<th class="result" onclick="sortBy('firstName');"
-						style="width: 200px;">First name<br /> <input id="firstName"
-						type="text" onkeyup="filter('firstName');" />
-					</th>
-					<th class="result" onclick="sortBy('lastName');">Last name<br />
-						<input id="lastName" type="text" onkeyup="filter('lastName');" />
-					</th>
-					<th class="result" style="width: 100px;"></th>
-				</tr>
-			</thead>
-			<tbody id="tbody">
-				<tr class="result">
-					<td class="result">No employees found</td>
-					<td class="result"></td>
-					<td class="result"></td>
-					<td class="result"></td>
-				</tr>
-			</tbody>
-		</table>
-		<br /> <a href="edit.html">Add Employee</a>
-	</div>
-</body>
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result" onclick="sortBy('id');" style="width:50px;">
+                            ID
+                        </th>
+                        <th class="result" onclick="sortBy('firstName');" style="width:200px;">
+                            First name<br />
+                            <input id="firstName" type="text" onkeyup="filter('firstName');" />
+                        </th>
+                        <th class="result" onclick="sortBy('lastName');">
+                            Last name<br />
+                            <input id="lastName" type="text" onkeyup="filter('lastName');"/>
+                        </th>
+                        <th class="result" style="width:40px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="emp_table">
+                    <tr class="result">
+                        <td class="result" colspan="4">Loading Employees</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <a href="edit.html">Add Employee</a>
+        </div>
+    </body>
 </html>

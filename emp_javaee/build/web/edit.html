@@ -35,28 +35,30 @@
             }
 
             function fillTable() {
-                var table = el("phone_table");
-                table.innerHTML = "";
+                if (employee.phones.length > 0) {
+                    var table = el("phone_table");
+                    table.innerHTML = "";
 
-                for (var i in employee.phones) {
-                    var phone = employee.phones[i];
-                    var row = table.insertRow(i);
-                    row.className = "result edit";
-                    row.setAttribute("onclick", "editPhone(" + i + ")");
+                    for (var i in employee.phones) {
+                        var phone = employee.phones[i];
+                        var row = table.insertRow(i);
+                        row.className = "result edit";
 
-                    var cellNumber = row.insertCell(0);
-                    cellNumber.className = "result";
-                    cellNumber.innerHTML = phone.number;
+                        var cellNumber = row.insertCell(0);
+                        cellNumber.className = "result";
+                        cellNumber.innerHTML = phone.number;
+                        cellNumber.setAttribute("onclick", "editPhone(" + i + ")");
 
-                    var del = document.createElement("a");
-                    del.setAttribute("href", "#");
-                    del.setAttribute("onclick", "deletePhone(" + i + ")");
-                    var delText = document.createTextNode("Delete");
-                    del.appendChild(delText);
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deletePhone(" + i + ")");
+                        var delText = document.createTextNode("Delete");
+                        del.appendChild(delText);
 
-                    var cellFunction = row.insertCell(1);
-                    cellFunction.className = "result";
-                    cellFunction.appendChild(del);
+                        var cellFunction = row.insertCell(1);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
                 }
             }
 
@@ -98,7 +100,6 @@
             }
 
             function editPhone(index) {
-                var table = el("phone_table");
                 table.deleteRow(index);
                 addPhoneEditor(index, "updatePhone(" + index + ")");
                 el("phone_number").value = employee.phones[index].number;
@@ -106,7 +107,14 @@
 
             function addPhoneEditor(index, onclick) {
                 var table = el("phone_table");
+                var row0 = table.rows[0];
+                var cell0 = row0.cells[0];
+                if (cell0.innerHTML.indexOf("No") !== -1) {
+                    table.deleteRow(0);
+                }
+                
                 var row = table.insertRow(index);
+                row.className = "result";
 
                 var input = document.createElement("input");
                 input.setAttribute("type", "text");

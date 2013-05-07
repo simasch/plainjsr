@@ -27,34 +27,50 @@
                 var table = el("emp_table");
                 table.innerHTML = "";
 
-                for (var i in emps) {
+                if (emps.length === 0) {
                     var employee = emps[i];
                     var row = table.insertRow(i);
                     row.className = "result edit";
-                    row.setAttribute("onclick", 
-                        "window.location = 'edit.html?id=" + employee.id + "'");
 
-                    var cellFirstName = row.insertCell(0);
-                    cellFirstName.className = "result";
-                    cellFirstName.innerHTML = employee.id;
+                    var cellId = row.insertCell(0);
+                    cellId.className = "result";
+                    cellId.innerHTML = "No Employees found";
+                    cellId.setAttribute("colspan", 4);
+                }
+                else {
+                    for (var i in emps) {
+                        var employee = emps[i];
+                        var row = table.insertRow(i);
+                        row.className = "result edit";
 
-                    var cellFirstName = row.insertCell(1);
-                    cellFirstName.className = "result";
-                    cellFirstName.innerHTML = employee.firstName;
+                        var cellId = row.insertCell(0);
+                        cellId.className = "result";
+                        cellId.innerHTML = employee.id;
+                        cellId.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-                    var cellLastName = row.insertCell(2);
-                    cellLastName.className = "result";
-                    cellLastName.innerHTML = employee.lastName;
+                        var cellFirstName = row.insertCell(1);
+                        cellFirstName.className = "result";
+                        cellFirstName.innerHTML = employee.firstName;
+                        cellFirstName.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-                    var del = document.createElement("a");
-                    del.setAttribute("href", "#");
-                    del.setAttribute("onclick", "deleteEmployee(" + employee.id + ")");
-                    var delText = document.createTextNode("Delete");
-                    del.appendChild(delText);
+                        var cellLastName = row.insertCell(2);
+                        cellLastName.className = "result";
+                        cellLastName.innerHTML = employee.lastName;
+                        cellLastName.setAttribute("onclick",
+                                "window.location = 'edit.html?id=" + employee.id + "'");
 
-                    var cellFunction = row.insertCell(3);
-                    cellFunction.className = "result";
-                    cellFunction.appendChild(del);
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteEmployee(" + employee.id + ")");
+                        var delText = document.createTextNode("Delete");
+                        del.appendChild(delText);
+
+                        var cellFunction = row.insertCell(3);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
                 }
             }
 
@@ -113,10 +129,7 @@
                 </thead>
                 <tbody id="emp_table">
                     <tr class="result">
-                        <td class="result">No employees found</td>
-                        <td class="result"></td>
-                        <td class="result"></td>
-                        <td class="result"></td>
+                        <td class="result" colspan="4">Loading Employees</td>
                     </tr>
                 </tbody>
             </table>
