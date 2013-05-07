@@ -14,7 +14,11 @@ The REST services can be implemented in any technology. The examples uses Java E
 
 The example does not use any JavaScript framework, to show that it is quite simple to use plain JavaScript. But JHCR does not forbid the usage of any if they really help frameworks.
 
-## Example emp
-The emp example is developed using NetBeans and runs on GlassFish 3.1.x.
+## Examples
+### emp_gae
+Runs on Google App Engine: https://jhcremp.appspot.com/
+
+### emp_javaee
+This example is developed using NetBeans and runs on GlassFish 3.1.x.
 
 Note: You have to a datasource named 'jdbc/emp'.
