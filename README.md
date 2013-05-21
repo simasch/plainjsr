@@ -5,7 +5,7 @@ After years of web development and the apperance of HTML5 I believe that web cli
 There is no longer a need for server side frameworks like JSF, PHP etc.
 
 After some discussions I was pointed to ROCA style: http://roca-style.org.
-I agree with ROCA expect that JHCR makes heavy use of JavaScript or in other words PlainJSR without JavaScript does not work!
+I agree with ROCA expect that PlainJSR makes heavy use of JavaScript or in other words PlainJSR without JavaScript does not work!
 
 I adapted most of the ROCA principles and created JHCR. 
 PlainJSR makes use of plain JavaScript, HTML, CSS and REST services. 
