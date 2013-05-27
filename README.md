@@ -12,7 +12,9 @@ PlainJSR makes use of plain JavaScript, HTML, CSS and REST services.
 
 The REST services can be implemented in any technology. The examples uses Java EE 6.
 
-The example does not use any JavaScript framework, to show that it is quite simple to use plain JavaScript. But PlainJSR does not forbid the usage of any if they really help frameworks.
+The example does not use any JavaScript framework, to show that it is quite simple to use plain JavaScript. 
+
+ PlainJSR does not forbid the usage of any framwework if it really helps. But be aware that every framework adds complexity to your solution!
 
 ## Examples
 ### emp_gae
