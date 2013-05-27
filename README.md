@@ -23,4 +23,4 @@ Runs on Google App Engine: https://jhcremp.appspot.com/
 ### emp_javaee
 This example is developed using NetBeans and runs on GlassFish 3.1.x.
 
-Note: You have to a datasource named 'jdbc/emp'.
+Note: The datasource name is 'jdbc/emp'.
