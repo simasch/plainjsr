@@ -7,7 +7,7 @@ There is no longer a need for server side frameworks like JSF, PHP etc.
 After some discussions I was pointed to ROCA style: http://roca-style.org.
 I agree with ROCA expect that PlainJSR makes heavy use of JavaScript or in other words PlainJSR without JavaScript does not work!
 
-I adapted most of the ROCA principles and created JHCR. 
+I adapted most of the ROCA principles and created PlainJSR. 
 PlainJSR makes use of plain JavaScript, HTML, CSS and REST services. 
 
 The REST services can be implemented in any technology. The examples uses Java EE 6.
